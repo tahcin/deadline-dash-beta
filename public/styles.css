@@ -146,12 +146,12 @@ body.dark-mode .event {
     transition: all 0.3s ease;
 }
 
-.toggle-moon {
+.toggle-sun {
     left: 10px;
     color: white;
 }
 
-.toggle-sun {
+.toggle-moon {
     right: 10px;
     color: white;
 }
