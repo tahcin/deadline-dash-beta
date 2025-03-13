@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const toggleButton = document.getElementById("darkModeToggle");
     const toggleIcon = document.getElementById("toggleIcon");
     const toggleText = document.getElementById("toggleText");
+    const notifyButton = document.getElementById("enableNotifications");
 
     // Check and apply the saved dark mode preference
     if (localStorage.getItem("darkMode") === "enabled") {
@@ -25,14 +26,18 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
-    // Request notification permission
-    if ("Notification" in window) {
-        Notification.requestPermission().then(permission => {
-            if (permission === "granted") {
-                console.log("Notifications enabled");
-            }
-        });
-    }
+    // Request notification permission on button click
+    notifyButton.addEventListener("click", function() {
+        if ("Notification" in window) {
+            Notification.requestPermission().then(permission => {
+                if (permission === "granted") {
+                    alert("Notifications enabled! You will receive reminders for deadlines.");
+                } else {
+                    alert("Notifications are blocked. Enable them in your browser settings if you change your mind.");
+                }
+            });
+        }
+    });
 });
 
 // Function to update the countdown every second
@@ -88,6 +93,7 @@ deadlines.forEach(event => {
         scheduleNotification(event.name, event.date);
     }
 });
+
 
 // Clickable event boxes
 document.addEventListener("DOMContentLoaded", function () {
