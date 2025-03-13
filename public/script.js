@@ -64,9 +64,12 @@ function registerServiceWorker() {
 // Subscribe user for push notifications
 function subscribeUser(registration) {
     if ('PushManager' in window) {
+        const vapidPublicKey = 'BEY0n3-H3bPxVfrCZ6x1MR9S0B2jmelnCLCipewOKB_GAPb_2hJcC8R7h0pcQs4t9pBdW9PWFiWwFYURbGkT8is';
+        const convertedVapidKey = urlBase64ToUint8Array(vapidPublicKey);
+        
         registration.pushManager.subscribe({
             userVisibleOnly: true,
-            applicationServerKey: 'BEY0n3-H3bPxVfrCZ6x1MR9S0B2jmelnCLCipewOKB_GAPb_2hJcC8R7h0pcQs4t9pBdW9PWFiWwFYURbGkT8is'
+            applicationServerKey: convertedVapidKey
         }).then(subscription => {
             console.log('User is subscribed:', subscription);
             // Send subscription to the server
@@ -75,6 +78,19 @@ function subscribeUser(registration) {
             console.error('Failed to subscribe the user:', error);
         });
     }
+}
+
+// Utility function to convert VAPID key
+function urlBase64ToUint8Array(base64String) {
+    const padding = '='.repeat((4 - base64String.length % 4) % 4);
+    const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
+    const rawData = window.atob(base64);
+    const outputArray = new Uint8Array(rawData.length);
+
+    for (let i = 0; i < rawData.length; ++i) {
+        outputArray[i] = rawData.charCodeAt(i);
+    }
+    return outputArray;
 }
 
 // Send subscription to the server
