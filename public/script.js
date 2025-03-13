@@ -162,7 +162,7 @@ function sendNotification(id) {
 }
 
 // Define event dates
-const event1Date = new Date("March 14, 2025 00:00:12").getTime();
+const event1Date = new Date("March 14, 2025 01:14:00").getTime();
 const event2Date = new Date("March 19, 2025 23:30:00").getTime();
 const event3Date = new Date("March 19, 2025 23:30:00").getTime();
 const event4Date = new Date("March 26, 2025 23:30:00").getTime();
