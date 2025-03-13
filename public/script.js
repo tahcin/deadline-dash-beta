@@ -24,6 +24,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // Button to enable notifications
     const enableNotificationsButton = document.getElementById("enableNotifications");
     enableNotificationsButton.addEventListener("click", function() {
+        console.log("Enable Notifications button clicked");
         requestNotificationPermission();
     });
 });
@@ -32,6 +33,7 @@ document.addEventListener("DOMContentLoaded", function() {
 function requestNotificationPermission() {
     if ('Notification' in window) {
         Notification.requestPermission().then(permission => {
+            console.log("Notification permission status:", permission);
             if (permission === 'granted') {
                 console.log('Notification permission granted.');
                 // Register the service worker
@@ -39,6 +41,8 @@ function requestNotificationPermission() {
             } else {
                 console.log('Notification permission denied.');
             }
+        }).catch(error => {
+            console.error('Notification permission request failed:', error);
         });
     } else {
         console.log('Browser does not support notifications.');
@@ -52,7 +56,7 @@ function registerServiceWorker() {
             console.log('Service Worker registered with scope:', registration.scope);
             subscribeUser(registration);
         }).catch(error => {
-            console.log('Service Worker registration failed:', error);
+            console.error('Service Worker registration failed:', error);
         });
     }
 }
@@ -62,13 +66,13 @@ function subscribeUser(registration) {
     if ('PushManager' in window) {
         registration.pushManager.subscribe({
             userVisibleOnly: true,
-            applicationServerKey: 'YOUR_VAPID_PUBLIC_KEY'
+            applicationServerKey: 'BEY0n3-H3bPxVfrCZ6x1MR9S0B2jmelnCLCipewOKB_GAPb_2hJcC8R7h0pcQs4t9pBdW9PWFiWwFYURbGkT8is'
         }).then(subscription => {
             console.log('User is subscribed:', subscription);
             // Send subscription to the server
             sendSubscriptionToServer(subscription);
         }).catch(error => {
-            console.log('Failed to subscribe the user:', error);
+            console.error('Failed to subscribe the user:', error);
         });
     }
 }
@@ -87,7 +91,7 @@ function sendSubscriptionToServer(subscription) {
         }
         console.log('Subscription sent to server');
     }).catch(error => {
-        console.log('Error sending subscription to server:', error);
+        console.error('Error sending subscription to server:', error);
     });
 }
 
@@ -122,10 +126,13 @@ function startCountdown(id, eventDate) {
 function sendNotification(id) {
     if ('Notification' in window && navigator.serviceWorker) {
         navigator.serviceWorker.ready.then(function(registration) {
+            console.log("Sending notification for event:", id);
             registration.showNotification("Event Reminder", {
                 body: `An event is starting in 1 hour!`,
                 icon: '/images/favicon-32x32.png'
             });
+        }).catch(error => {
+            console.error('Error showing notification:', error);
         });
     }
 }
