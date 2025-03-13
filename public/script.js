@@ -23,10 +23,14 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Button to enable notifications
     const enableNotificationsButton = document.getElementById("enableNotifications");
-    enableNotificationsButton.addEventListener("click", function() {
-        console.log("Enable Notifications button clicked");
-        requestNotificationPermission();
-    });
+    if (enableNotificationsButton) {
+        enableNotificationsButton.addEventListener("click", function() {
+            console.log("Enable Notifications button clicked");
+            requestNotificationPermission();
+        });
+    } else {
+        console.error("Enable Notifications button not found");
+    }
 });
 
 // Request permission for notifications
@@ -58,6 +62,8 @@ function registerServiceWorker() {
         }).catch(error => {
             console.error('Service Worker registration failed:', error);
         });
+    } else {
+        console.log('Browser does not support service workers.');
     }
 }
 
@@ -77,6 +83,8 @@ function subscribeUser(registration) {
         }).catch(error => {
             console.error('Failed to subscribe the user:', error);
         });
+    } else {
+        console.log('Browser does not support push notifications.');
     }
 }
 
@@ -168,9 +176,9 @@ startCountdown("timer4", event4Date);
 //buttons
 document.addEventListener("DOMContentLoaded", function () {
     const buttonLinks = {
-        countdown1: "https://apps.iimbx.edu.in/learning/course/course-v1:IIMBx+AE21x+BBA_DBE_B1/block-v1:IIMBx+AE21x+BBA_DBE_B1+type@sequential+block@a30079406b774766945f7df7ba37c95b/block-v1:IIMBx+AE21x+BBA_DBE_B1+type@vertical+block@3d2d25f969b84b3b87395be337ec5300",  
-        countdown2: "https://apps.iimbx.edu.in/learning/course/course-v1:IIMBx+ES21x+BBA_DBE_B1/block-v1:IIMBx+ES21x+BBA_DBE_B1+type@sequential+block@6af5281590564e63870f26b57b78f841/block-v1:IIMBx+ES21x+BBA_DBE_B1+type@vertical+block@vertical7",
-        countdown3: "https://apps.iimbx.edu.in/learning/course/course-v1:IIMBx+PJ21x+BBA_DBE_B1/block-v1:IIMBx+PJ21x+BBA_DBE_B1+type@sequential+block@3f3d99591cb14a9e9a133b3583251766/block-v1:IIMBx+PJ21x+BBA_DBE_B1+type@vertical+block@27405e39773d443288c557c7f97d7822",
+        countdown1: ""
+        countdown2: ""
+        countdown3: ""
         countdown4: ""
     };
 
