@@ -176,9 +176,9 @@ startCountdown("timer4", event4Date);
 //buttons
 document.addEventListener("DOMContentLoaded", function () {
     const buttonLinks = {
-        countdown1: ""
-        countdown2: ""
-        countdown3: ""
+        countdown: "",
+        countdown2: "",
+        countdown3: "",
         countdown4: ""
     };
 
