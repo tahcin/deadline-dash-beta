@@ -125,7 +125,7 @@ body.dark-mode .event {
     position: relative;
     width: 80px; /* Smaller width */
     height: 30px; /* Smaller height */
-    background: linear-gradient(135deg, #f0a500, #a6192e); /* Gold to red gradient */
+    background: linear-gradient(135deg, #888, #555); /* Grey gradient */
     border-radius: 30px;
     display: flex;
     align-items: center;
@@ -136,7 +136,7 @@ body.dark-mode .event {
 }
 
 body.dark-mode .toggle-track {
-    background: linear-gradient(135deg, #f0a500, #a6192e); /* Gold to red gradient for dark mode */
+    background: linear-gradient(135deg, #888, #555); /* Grey gradient for dark mode */
 }
 
 .toggle-moon, .toggle-sun {
@@ -152,12 +152,12 @@ body.dark-mode .toggle-track {
 
 .toggle-sun {
     left: 10px;
-    color: #FFD700; /* Bright yellow color for sun */
+    color: #ccc; /* Grey color for sun */
 }
 
 .toggle-moon {
     right: 10px;
-    color: #87CEEB; /* Soft blue color for moon */
+    color: #ccc; /* Grey color for moon */
 }
 
 .toggle-thumb {
