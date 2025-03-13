@@ -24,6 +24,15 @@ document.addEventListener("DOMContentLoaded", function() {
             toggleText.textContent = "Dark Mode";
         }
     });
+
+    // Request notification permission
+    if ("Notification" in window) {
+        Notification.requestPermission().then(permission => {
+            if (permission === "granted") {
+                console.log("Notifications enabled");
+            }
+        });
+    }
 });
 
 // Function to update the countdown every second
@@ -48,20 +57,39 @@ function startCountdown(id, eventDate) {
     }, 1000);
 }
 
+// Function to schedule notifications
+function scheduleNotification(eventName, eventDate) {
+    const oneHourBefore = eventDate - 60 * 60 * 1000;
+    const now = new Date().getTime();
+    
+    if (oneHourBefore > now) {
+        const timeout = oneHourBefore - now;
+        setTimeout(() => {
+            new Notification("Deadline Reminder", {
+                body: `Reminder: ${eventName} deadline in 1 hour!`,
+                icon: "/images/notification-icon.png"
+            });
+        }, timeout);
+    }
+}
+
 // Define event dates
-const event1Date = new Date("March 19, 2025 23:30:00").getTime();
-const event2Date = new Date("March 19, 2025 23:30:00").getTime();
-const event3Date = new Date("March 19, 2025 23:30:00").getTime();
-const event4Date = new Date("March 26, 2025 23:30:00").getTime();
+const deadlines = [
+    { id: "timer1", name: "Foundations of Business Communication II - Module 4 CLA", date: new Date("March 19, 2025 23:30:00").getTime() },
+    { id: "timer2", name: "Principles of Microeconomics - Module 4 CLA", date: new Date("March 19, 2025 23:30:00").getTime() },
+    { id: "timer3", name: "Venturing on a Budget: Rs250 Venture - Module 3 CLA", date: new Date("March 19, 2025 23:30:00").getTime() },
+    { id: "timer4", name: "Advanced Statistics for Business - Mid-Term 2", date: new Date("March 26, 2025 23:30:00").getTime() }
+];
 
-// Start countdowns
-startCountdown("timer1", event1Date);
-startCountdown("timer2", event2Date);
-startCountdown("timer3", event3Date);
-startCountdown("timer4", event4Date);
+// Start countdowns and schedule notifications
+deadlines.forEach(event => {
+    startCountdown(event.id, event.date);
+    if ("Notification" in window && Notification.permission === "granted") {
+        scheduleNotification(event.name, event.date);
+    }
+});
 
-
-//buttons
+// Clickable event boxes
 document.addEventListener("DOMContentLoaded", function () {
     const buttonLinks = {
         countdown1: "https://apps.iimbx.edu.in/learning/course/course-v1:IIMBx+AE21x+BBA_DBE_B1/block-v1:IIMBx+AE21x+BBA_DBE_B1+type@sequential+block@a30079406b774766945f7df7ba37c95b/block-v1:IIMBx+AE21x+BBA_DBE_B1+type@vertical+block@3d2d25f969b84b3b87395be337ec5300",  
@@ -71,12 +99,11 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     document.querySelectorAll(".event").forEach(eventBox => {
-        eventBox.style.cursor = "pointer"; // Make it clear it's clickable
-
+        eventBox.style.cursor = "pointer";
         eventBox.addEventListener("click", function () {
             const eventId = this.id;
             if (buttonLinks[eventId]) {
-                window.open(buttonLinks[eventId], "_blank"); // Open in new tab
+                window.open(buttonLinks[eventId], "_blank");
             }
         });
     });
@@ -85,12 +112,10 @@ document.addEventListener("DOMContentLoaded", function () {
 document.addEventListener("DOMContentLoaded", function () {
     document.querySelectorAll(".join-button").forEach(button => {
         if (!button.getAttribute("href") || button.getAttribute("href") === "") {
-            button.style.pointerEvents = "none";  // Disable clicks
-            button.style.opacity = "0.5";         // Reduce visibility
-            button.style.cursor = "not-allowed";  // Change cursor style
-            button.textContent = "Link Not Available"; // Update button text
+            button.style.pointerEvents = "none";
+            button.style.opacity = "0.5";
+            button.style.cursor = "not-allowed";
+            button.textContent = "Link Not Available";
         }
     });
 });
-
-
