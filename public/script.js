@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function() {
-    // Dark mode toggle (existing code - no changes)
+    // Dark mode toggle (existing code)
     const toggleButton = document.getElementById("darkModeToggle");
     const toggleIcon = document.getElementById("toggleIcon");
     const toggleText = document.getElementById("toggleText");
@@ -24,9 +24,9 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
-    // --- Notification Feature with Service Worker ---
+    // --- Notification Feature with Service Worker and Universal Button ---
 
-    // Register service worker
+    // Register service worker (existing code)
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('/service-worker.js')
             .then(registration => {
@@ -39,8 +39,7 @@ document.addEventListener("DOMContentLoaded", function() {
         console.log('Service Workers are not supported in this browser.');
     }
 
-
-    // Request notification permission on page load (existing code - no changes)
+    // Request notification permission on page load (existing code)
     if ('Notification' in window) {
         Notification.requestPermission().then(permission => {
             if (permission === 'granted') {
@@ -55,32 +54,83 @@ document.addEventListener("DOMContentLoaded", function() {
         console.log('Notifications are not supported in this browser.');
     }
 
-
-    // Event data (Store event details - no changes)
+    // Event data (Store event details - MODIFIED to include isSession flag)
     const eventsData = [
-        { id: "timer1", title: "FBC II Module 4 CLA", deadline: new Date("March 19, 2025 23:30:00").getTime() },
-        { id: "timer2", title: "Microeconomics Module 4 CLA", deadline: new Date("March 19, 2025 23:30:00").getTime() },
-        { id: "timer3", title: "Rs250 Venture Module 3 CLA", deadline: new Date("March 19, 2025 23:30:00").getTime() },
-        { id: "timer4", title: "Advanced Statistics Mid-Term 2", deadline: new Date("March 26, 2025 23:30:00").getTime() },
-        { id: "session1", title: "Principles of Microeconomics Live Session", date: new Date("March 17, 2025 17:00:00").getTime() }, // Session 1 Date & Time
-        { id: "session2", title: "Venturing on a Budget Live Session", date: new Date("March 20, 2025 00:00:00").getTime() }, // Session 2 - Time TBA, set a placeholder, update later
-        { id: "session3", title: "Foundations of Business Communication II SME Live Session", date: new Date("March 21, 2025 17:00:00").getTime() }  // Session 3 Date & Time
+        { id: "timer1", title: "FBC II Module 4 CLA", deadline: new Date("March 19, 2025 23:30:00").getTime(), isSession: false },
+        { id: "timer2", title: "Microeconomics Module 4 CLA", deadline: new Date("March 19, 2025 23:30:00").getTime(), isSession: false },
+        { id: "timer3", title: "Rs250 Venture Module 3 CLA", deadline: new Date("March 19, 2025 23:30:00").getTime(), isSession: false },
+        { id: "timer4", title: "Advanced Statistics Mid-Term 2", deadline: new Date("March 26, 2025 23:30:00").getTime(), isSession: false },
+        { id: "session1", title: "Principles of Microeconomics Live Session", date: new Date("March 17, 2025 17:00:00").getTime(), isSession: true }, // Session 1 Date & Time
+        { id: "session2", title: "Venturing on a Budget Live Session", date: new Date("March 20, 2025 00:00:00").getTime(), isSession: true }, // Session 2 - Time TBA, set a placeholder, update later
+        { id: "session3", title: "Foundations of Business Communication II SME Live Session", date: new Date("March 21, 2025 17:00:00").getTime(), isSession: true }  // Session 3 Date & Time
     ];
 
-    // Function to update the countdown every second (modified - notification scheduling logic removed)
+    // --- Reminder Manager Modal Logic ---
+    const reminderManagerToggle = document.getElementById('reminderManagerToggle');
+    const reminderManagerModal = document.getElementById('reminderManager');
+    const closeReminderManagerButton = document.getElementById('closeReminderManager');
+    const reminderListElement = document.getElementById('reminderList');
+
+    // Function to populate the reminder list in the modal
+    function populateReminderList() {
+        reminderListElement.innerHTML = ''; // Clear existing list
+        eventsData.forEach(event => {
+            const listItem = document.createElement('li');
+            const label = document.createElement('label');
+            label.classList.add('reminder-toggle-label');
+            label.textContent = event.title;
+
+            const switchContainer = document.createElement('label');
+            switchContainer.classList.add('reminder-switch');
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.id = `reminderToggle-${event.id}`; // Unique ID for each checkbox
+            checkbox.checked = localStorage.getItem(`reminder-${event.id}`) === 'enabled'; // Load saved state
+            const slider = document.createElement('span');
+            slider.classList.add('reminder-slider', 'round');
+
+            switchContainer.appendChild(checkbox);
+            switchContainer.appendChild(slider);
+
+            listItem.appendChild(label);
+            listItem.appendChild(switchContainer);
+            reminderListElement.appendChild(listItem);
+
+            // Event listener for each checkbox change
+            checkbox.addEventListener('change', function() {
+                const reminderEnabled = checkbox.checked;
+                localStorage.setItem(`reminder-${event.id}`, reminderEnabled ? 'enabled' : 'disabled');
+                if (reminderEnabled) {
+                    scheduleNotificationSW(event.title, event.isSession ? event.date : event.deadline, event.id);
+                } else {
+                    cancelNotificationSW(event.id); // Optional cancel
+                }
+            });
+        });
+    }
+
+    // Open modal
+    reminderManagerToggle.addEventListener('click', function() {
+        populateReminderList(); // Populate list each time modal is opened to reflect current state
+        reminderManagerModal.style.display = "block";
+    });
+
+    // Close modal
+    closeReminderManagerButton.addEventListener('click', function() {
+        reminderManagerModal.style.display = "none";
+    });
+
+    // Close modal if clicked outside
+    window.addEventListener('click', function(event) {
+        if (event.target == reminderManagerModal) {
+            reminderManagerModal.style.display = "none";
+        }
+    });
+
+
+    // Function to update the countdown every second (no changes needed for countdown logic itself)
     function startCountdown(id, eventDate, eventTitle) {
         const countdownElement = document.getElementById(id);
-        const reminderButton = document.querySelector(`.event[id="${id}"] .reminder-button`);
-        const notificationStatus = document.querySelector(`.event[id="${id}"] .notification-status`);
-
-        let reminderEnabled = localStorage.getItem(`reminder-${id}`) === 'enabled';
-        if (reminderButton) {
-            reminderButton.classList.toggle('active', reminderEnabled);
-        }
-        if (notificationStatus) {
-            notificationStatus.textContent = reminderEnabled ? 'Reminder Active' : '';
-        }
-
 
         const interval = setInterval(function() {
             const now = new Date().getTime();
@@ -98,40 +148,22 @@ document.addEventListener("DOMContentLoaded", function() {
                 countdownElement.innerHTML = "EXPIRED";
             }
         }, 1000);
-
-
-        if (reminderButton) {
-            reminderButton.addEventListener('click', function() {
-                reminderEnabled = !reminderEnabled;
-                reminderButton.classList.toggle('active', reminderEnabled);
-                localStorage.setItem(`reminder-${id}`, reminderEnabled ? 'enabled' : 'disabled');
-                if (notificationStatus) {
-                    notificationStatus.textContent = reminderEnabled ? 'Reminder Active' : '';
-                }
-
-                if (reminderEnabled) {
-                    scheduleNotificationSW(eventTitle, eventDate, id); // Use Service Worker scheduling
-                } else {
-                    cancelNotificationSW(id); // Optional cancel - not implemented in this example, but keep function name for consistency
-                }
-            });
-        }
     }
 
-    // Function to schedule a notification using Service Worker
+    // Function to schedule a notification using Service Worker (no changes needed)
     function scheduleNotificationSW(eventTitle, eventDate, eventId) {
-        if ('serviceWorker' in navigator && navigator.serviceWorker.controller) { // Check if SW is active
+        if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
             Notification.requestPermission().then(permission => {
                 if (permission === 'granted') {
                     const reminderTime = eventDate - (60 * 60 * 1000); // 1 hour before
                     if (reminderTime > Date.now()) {
-                        navigator.serviceWorker.controller.postMessage({ // Send message to SW
+                        navigator.serviceWorker.controller.postMessage({
                             action: 'schedule-notification',
                             payload: {
                                 title: 'Deadline Dash Reminder',
                                 body: `Reminder: ${eventTitle} is in 1 hour!`,
                                 timestamp: reminderTime,
-                                eventId: eventId // Pass eventId as tag
+                                eventId: eventId
                             }
                         });
                         console.log(`Notification scheduling message sent to Service Worker for ${eventTitle}`);
@@ -141,79 +173,31 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
             });
         } else {
-            console.log('Service worker not active. Cannot schedule notification.'); // Fallback if SW not active
-            alert('Notifications require a service worker to be active. Please ensure your browser supports service workers and the site is served over HTTPS.'); // Optional user feedback
+            console.log('Service worker not active. Cannot schedule notification.');
+            alert('Notifications require a service worker to be active. Please ensure your browser supports service workers and the site is served over HTTPS.');
         }
     }
 
-
-    // Optional: Function to cancel a scheduled notification (for Service Worker - placeholder)
+    // Optional: Function to cancel a scheduled notification (for Service Worker - placeholder) (no changes needed)
     function cancelNotificationSW(eventId) {
-        // In a more advanced setup, you might need to manage tags or IDs
-        // of notifications scheduled by the service worker to cancel them.
-        // For this basic example, we are not implementing cancellation from UI.
         console.log(`Notification cancellation requested for ${eventId} (Service Worker - Not fully implemented in this example)`);
     }
-
 
     // Define event dates and start countdowns (no changes)
     const event1Date = eventsData[0].deadline;
     const event2Date = eventsData[1].deadline;
     const event3Date = eventsData[2].deadline;
     const event4Date = eventsData[3].deadline;
+    const session1Date = eventsData[4].date;
+    const session2Date = eventsData[5].date;
+    const session3Date = eventsData[6].date;
 
-    // Start countdowns (modified to pass event titles)
+
+    // Start countdowns (modified to pass event titles) (no changes)
     startCountdown("timer1", event1Date, eventsData[0].title);
     startCountdown("timer2", event2Date, eventsData[1].title);
     startCountdown("timer3", event3Date, eventsData[2].title);
     startCountdown("timer4", event4Date, eventsData[3].title);
-
-
-    // --- Session Reminder Logic (modified to use scheduleNotificationSW) ---
-    function setupSessionReminders() {
-        const sessions = document.querySelectorAll(".session");
-        sessions.forEach(session => {
-            const sessionId = session.id; // Assuming you might add IDs to sessions later if needed
-            const sessionTitle = session.querySelector('h2').textContent;
-            const sessionDateText = session.querySelector('p strong:nth-of-type(1)').nextSibling.textContent.trim(); // Date from "Date:"
-            const sessionTimeText = session.querySelector('p strong:nth-of-type(2)').nextSibling.textContent.trim(); // Time from "Time:"
-
-            // Find the session data from eventsData based on title (or a more robust identifier if available)
-            const sessionEventData = eventsData.find(event => event.title === sessionTitle);
-            let sessionDateTime = null;
-
-            if (sessionEventData && sessionEventData.date) {
-                sessionDateTime = sessionEventData.date; // Use date from eventsData if available
-            } else {
-                // Fallback to parsing from text if date in eventsData is missing or for dynamic content
-                const dateAndTimeStr = `${sessionDateText} ${sessionTimeText}`;
-                sessionDateTime = new Date(dateAndTimeStr).getTime(); // Parse date and time strings
-            }
-
-
-            const reminderButtonSession = session.querySelector('.join-button'); // Reusing join-button as reminder for sessions for simplicity, you can add separate button if needed
-            if (reminderButtonSession) {
-                 // Load reminder preference from localStorage for sessions
-                let reminderEnabledSession = localStorage.getItem(`reminder-${sessionId || sessionTitle}`) === 'enabled'; // Use sessionTitle as fallback if no ID
-                reminderButtonSession.classList.toggle('active', reminderEnabledSession); // Set initial button state
-
-                reminderButtonSession.addEventListener('click', function(event) {
-                    event.preventDefault();
-                    reminderEnabledSession = !reminderEnabledSession;
-                    reminderButtonSession.classList.toggle('active', reminderEnabledSession);
-                    localStorage.setItem(`reminder-${sessionId || sessionTitle}`, reminderEnabledSession ? 'enabled' : 'disabled');
-
-                    if (reminderEnabledSession && sessionDateTime) {
-                        scheduleNotificationSW(sessionTitle + " Live Session", sessionDateTime, sessionId || sessionTitle); // Use SW for session reminders
-                    } else {
-                        cancelNotificationSW(sessionId || sessionTitle); // Optional cancel for sessions
-                    }
-                });
-            }
-        });
-    }
-
-    setupSessionReminders();
 
 
     //buttons (existing code - no changes)
