@@ -368,3 +368,29 @@ body.dark-mode .join-button:hover {
 .notification-permission {
     margin-bottom: 20px; /* Adjust spacing as needed */
 }
+
+#subscribeNotifications {
+    background: #f0a500; /* Gold color, similar to your accents but more solid */
+    color: white; /* White text for contrast */
+    border: none; /* Remove default button border */
+    padding: 12px 24px; /* Slightly larger padding */
+    font-weight: 700; /* Bold text */
+    border-radius: 25px; /* More rounded corners */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Deeper shadow for lift */
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    text-transform: uppercase; /* Optional: Uppercase text for emphasis */
+    letter-spacing: 1px; /* Optional: Slightly wider letter spacing */
+    font-size: 1em; /* Adjust font size if needed */
+}
+
+#subscribeNotifications:hover {
+    background-color: #a6192e; /* Red color on hover, creates a clear change */
+    transform: scale(1.05); /* Slight scale up on hover */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* Increased shadow on hover */
+}
+
+#subscribeNotifications:active {
+    transform: scale(0.98); /* Press effect */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Reduced shadow on press */
+}
