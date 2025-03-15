@@ -1,4 +1,3 @@
---- START OF FILE script (3).js ---
 document.addEventListener("DOMContentLoaded", function() {
     // Dark mode toggle (existing code)
     const toggleButton = document.getElementById("darkModeToggle");
