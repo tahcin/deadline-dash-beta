@@ -46,26 +46,27 @@
     <div class="toggle-container" id="darkModeToggle">
         <span id="toggleIcon">🌙</span> <span id="toggleText">Dark Mode</span>
     </div>
-
     <div class="countdown">
+        <div class="notification-permission" style="text-align: center; margin-bottom: 20px;">
+            <button id="subscribeNotifications" style="display: none;" class="join-button">Enable Notifications</button>
+        </div>
         <div class="logo-container">
             <img src="/images/bbadbe.jpg" alt="BBA DBE Logo" class="logo">
         </div>
         <h1>CLA and Mid-Term Countdowns</h1>
-        <button id="reminderManagerToggle" class="reminder-button" style="margin-bottom: 20px;">Manage Reminders</button> <!-- Universal Reminder Button -->
-        <div id="timer1" class="event">
+        <div id="countdown1" class="event">
             <h2>Foundations of Business Communication II<br> Module 4 CLA</h2>
             <div id="timer1"></div>
         </div>
-        <div id="timer2" class="event">
+        <div id="countdown2" class="event">
             <h2>Principles of Microeconomics<br> Module 4 CLA</h2>
             <div id="timer2"></div>
         </div>
-        <div id="timer3" class="event">
+        <div id="countdown3" class="event">
             <h2>Venturing on a Budget: Rs250 Venture<br>Module 3 CLA </h2>
             <div id="timer3"></div>
         </div>
-        <div id="timer4" class="event">
+        <div id="countdown4" class="event">
             <h2>Advanced Statistics for Business<br> Mid-Term 2 </h2>
             <div id="timer4"></div>
         </div>
@@ -74,38 +75,28 @@
         <h1>Upcoming Live Sessions</h1>
         <p>(Links will be updated when we get the mail for the session.)</p><br>
 
-        <div class="session" id="session1"> <!-- Added IDs to sessions -->
+        <div class="session">
             <h2>Principles of Microeconomics</h2>
-            <h3>Faculty Live Session</h3>
+            <h3>Faculty Live Session </h3>
             <p><strong>Date:</strong> March 17, 2025</p>
             <p><strong>Time:</strong> 5:00 - 6:30 PM IST</p>
             <a href="" target="_blank" class="join-button">Join Session</a>
         </div>
 
-        <div class="session" id="session2">
+        <div class="session">
             <h2>Venturing on a Budget: Rs250 Venture</h2>
-            <h3>Faculty Live Session</h3>
+            <h3>Faculty Live Session </h3>
             <p><strong>Date:</strong> March 20, 2025</p>
             <p><strong>Time:</strong> TBA</p>
             <a href="" target="_blank" class="join-button">Join Session</a>
         </div>
 
-         <div class="session" id="session3">
+         <div class="session">
             <h2>Foundations of Business Communication II </h2>
-            <h3>SME Live Session</h3>
+            <h3>SME Live Session </h3>
             <p><strong>Date:</strong> March 21, 2025</p>
             <p><strong>Time:</strong> 5:00 PM IST</p>
             <a href="" target="_blank" class="join-button">Join Session</a>
-        </div>
-    </div>
-
-    <div id="reminderManager" class="modal"> <!-- Reminder Manager Modal -->
-        <div class="modal-content">
-            <span class="close-button" id="closeReminderManager">×</span>
-            <h2>Manage Reminders</h2>
-            <ul id="reminderList">
-                <!-- Reminder list will be populated by JavaScript -->
-            </ul>
         </div>
     </div>
 
