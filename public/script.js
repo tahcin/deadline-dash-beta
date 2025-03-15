@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Event data (Store event details - MODIFIED to include isSession flag)
     const eventsData = [
-        { id: "timer1", title: "FBC II Module 4 CLA", deadline: new Date("March 19, 2025 23:30:00").getTime(), isSession: false },
+        { id: "timer1", title: "FBC II Module 4 CLA", deadline: new Date("March 15, 2025 9:16:00").getTime(), isSession: false },
         { id: "timer2", title: "Microeconomics Module 4 CLA", deadline: new Date("March 19, 2025 23:30:00").getTime(), isSession: false },
         { id: "timer3", title: "Rs250 Venture Module 3 CLA", deadline: new Date("March 19, 2025 23:30:00").getTime(), isSession: false },
         { id: "timer4", title: "Advanced Statistics Mid-Term 2", deadline: new Date("March 26, 2025 23:30:00").getTime(), isSession: false },
