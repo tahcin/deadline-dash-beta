@@ -1,37 +1,31 @@
 // service-worker.js
 
-self.addEventListener('install', event => {
-    console.log('Service Worker installed');
-    // Perform install steps if needed
-});
-
-self.addEventListener('activate', event => {
-    console.log('Service Worker activated');
-    // Perform activation steps if needed
-});
-
-self.addEventListener('message', event => {
-    if (event.data.action === 'schedule-notification') {
-        const { title, body, timestamp, eventId } = event.data.payload;
-
-        const delay = timestamp - Date.now();
-        if (delay > 0) {
-            setTimeout(() => {
-                self.registration.showNotification('Deadline Dash Reminder', {
-                    body: body,
-                    icon: '/images/favicon-32x32.png',
-                    tag: eventId // Use tag to prevent stacking of notifications for the same event if needed
-                });
-            }, delay);
-            console.log(`Notification scheduled by Service Worker for ${title} in ${delay/1000} seconds`);
-        } else {
-            console.log('Reminder time is in the past, not scheduling.');
-        }
+self.addEventListener('push', function(event) {
+    let notificationData = {};
+    try {
+        notificationData = event.data.json(); // Try to parse as JSON
+    } catch (e) {
+        notificationData = {  // Fallback if not valid JSON
+            title: 'Deadline Reminder',
+            body: 'Check Deadline Dash for updates!',
+            click_action: '/'
+        };
     }
+
+    const title = notificationData.title || 'Deadline Reminder';
+    const options = {
+        body: notificationData.body || 'You have an upcoming deadline!',
+        icon: '/images/notification-icon.png', // TODO: Path to your notification icon (optional)
+        badge: '/images/notification-badge.png', // TODO: Path to your notification badge (optional - for Android)
+        click_action: notificationData.click_action || '/' // URL to open on notification click
+    };
+
+    event.waitUntil(self.registration.showNotification(title, options));
 });
 
-self.addEventListener('notificationclick', event => {
+self.addEventListener('notificationclick', function(event) {
     event.notification.close();
-    // You can add actions here, like opening the website when notification is clicked.
-    // For simplicity, let's just close the notification.
+    event.waitUntil(
+        clients.openWindow(event.notification.options.click_action || '/') // Open URL from notification options or default to root
+    );
 });
