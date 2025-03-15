@@ -85,9 +85,9 @@ body.dark-mode h2 {
     margin-top: 10px;
 }
 
-body.dark-mode #timer1, 
-body.dark-mode #timer2, 
-body.dark-mode #timer3, 
+body.dark-mode #timer1,
+body.dark-mode #timer2,
+body.dark-mode #timer3,
 body.dark-mode #timer4 {
     color: #f0a500;
 }
@@ -100,6 +100,7 @@ body.dark-mode #timer4 {
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer; /* Added cursor pointer to .event */
 }
 
 .event:hover {
@@ -221,7 +222,6 @@ body.dark-mode footer a {
 
 
 .event {
-    cursor: pointer;
     transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease;
 }
 
@@ -363,4 +363,51 @@ body.dark-mode .join-button {
 
 body.dark-mode .join-button:hover {
     background: linear-gradient(135deg, #a6192e, #f0a500);
+}
+
+/* Reminder Button Styles - ADDED */
+.reminder-button {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 15px;
+    background-color: #007bff; /* Example color */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease;
+}
+
+.reminder-button:hover {
+    background-color: #0056b3;
+}
+
+.reminder-button.active {
+    background-color: #28a745; /* Green to indicate active reminder */
+}
+
+body.dark-mode .reminder-button {
+    background-color: #f0a500; /* Dark mode example color */
+    color: #333;
+}
+
+body.dark-mode .reminder-button:hover {
+    background-color: #e09500;
+}
+
+body.dark-mode .reminder-button.active {
+    background-color: #3cb371; /* Dark mode green */
+    color: white;
+}
+
+/* Notification Status (Optional) - ADDED */
+.notification-status {
+    margin-top: 5px;
+    font-size: 0.85em;
+    color: #777;
+}
+
+body.dark-mode .notification-status {
+    color: #bbb;
 }
