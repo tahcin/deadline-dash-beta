@@ -1,3 +1,4 @@
+--- START OF FILE script (3).js ---
 document.addEventListener("DOMContentLoaded", function() {
     // Dark mode toggle (existing code)
     const toggleButton = document.getElementById("darkModeToggle");
@@ -128,9 +129,17 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
 
-    // Function to update the countdown every second (no changes needed for countdown logic itself)
+    // Function to update the countdown every second
     function startCountdown(id, eventDate, eventTitle) {
+        console.log(`startCountdown called for id: ${id}, eventTitle: ${eventTitle}`); // DEBUG: Function call
+
         const countdownElement = document.getElementById(id);
+        console.log(`countdownElement for ${id}:`, countdownElement); // DEBUG: Check if element is found
+
+        if (!countdownElement) {
+            console.error(`Countdown element with id "${id}" not found!`); // DEBUG: Error if element not found
+            return; // Exit if element is not found
+        }
 
         const interval = setInterval(function() {
             const now = new Date().getTime();
@@ -141,11 +150,19 @@ document.addEventListener("DOMContentLoaded", function() {
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            countdownElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+            const timerText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+            console.log(`Updating timer ${id} with text: "${timerText}"`); // DEBUG: Timer text before update
+            console.log(`countdownElement.innerHTML before update:`, countdownElement.innerHTML); // DEBUG: InnerHTML before update
+
+            countdownElement.innerHTML = timerText; // Update timer
+
+            console.log(`countdownElement.innerHTML after update:`, countdownElement.innerHTML); // DEBUG: InnerHTML after update
+
 
             if (distance < 0) {
                 clearInterval(interval);
                 countdownElement.innerHTML = "EXPIRED";
+                console.log(`Countdown ${id} expired, set text to EXPIRED`); // DEBUG: Expiry message
             }
         }, 1000);
     }
