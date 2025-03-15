@@ -117,75 +117,22 @@ body.dark-mode .event {
     margin: 10px auto;
     display: flex;
     justify-content: center;
+    background: #ddd;
+    padding: 10px 15px;
+    border-radius: 20px;
     cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    transition: background 0.3s, color 0.3s;
     width: fit-content;
 }
 
-.toggle-track {
-    position: relative;
-    width: 80px; /* Smaller width */
-    height: 30px; /* Smaller height */
-    background: linear-gradient(135deg, #888, #555); /* Grey gradient */
-    border-radius: 30px;
-    display: flex;
-    align-items: center;
-    padding: 0 5px;
-    overflow: hidden;
-    transition: all 0.3s ease;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-body.dark-mode .toggle-track {
-    background: linear-gradient(135deg, #888, #555); /* Grey gradient for dark mode */
-}
-
-.toggle-moon, .toggle-sun {
-    position: absolute;
-    width: 20px; /* Smaller icon size */
-    height: 20px; /* Smaller icon size */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px; /* Smaller font size */
-    transition: all 0.3s ease;
-}
-
-.toggle-sun {
-    left: 10px;
-    color: #ccc; /* Grey color for sun */
-}
-
-.toggle-moon {
-    right: 10px;
-    color: #ccc; /* Grey color for moon */
-}
-
-.toggle-thumb {
-    position: absolute;
-    width: 24px; /* Smaller thumb size */
-    height: 24px; /* Smaller thumb size */
-    background-color: white;
-    border-radius: 50%;
-    left: 3px;
-    transition: transform 0.3s ease;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-/* Dark Mode Active State */
-body.dark-mode .toggle-thumb {
-    transform: translateX(50px); /* Adjusted translate value for smaller thumb */
-}
-
-.sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border-width: 0;
+body.dark-mode .toggle-container {
+    background: #444;
+    color: white;
 }
 
 /* Footer */
@@ -272,6 +219,7 @@ body.dark-mode footer a {
     }
 }
 
+
 .event {
     cursor: pointer;
     transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease;
@@ -308,6 +256,7 @@ body.dark-mode .event:hover h2 {
 .event:active {
     transform: scale(0.98);
 }
+
 
 /* Live Sessions Section */
 .live-sessions {
@@ -358,6 +307,7 @@ body.dark-mode .session {
     background: linear-gradient(135deg, #222, #2a2a2a);
     box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
 }
+
 
 /* Join Session Button */
 .join-button {
@@ -412,43 +362,5 @@ body.dark-mode .join-button {
 }
 
 body.dark-mode .join-button:hover {
-    background: linear-gradient(135deg, #a6192e, #f0a500);
-}
-
-/* Notification Button */
-.notification-container {
-    text-align: center;
-    margin-top: 20px;
-}
-
-.notification-button {
-    padding: 12px 25px;
-    font-size: 1em;
-    font-weight: bold;
-    color: white;
-    background: linear-gradient(135deg, #a6192e, #f0a500);
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background 0.4s ease, transform 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-}
-
-.notification-button:hover {
-    background: linear-gradient(135deg, #f0a500, #a6192e);
-    transform: scale(1.05);
-    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
-}
-
-.notification-button:active {
-    transform: scale(0.98);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
-}
-
-body.dark-mode .notification-button {
-    background: linear-gradient(135deg, #f0a500, #a6192e);
-}
-
-body.dark-mode .notification-button:hover {
     background: linear-gradient(135deg, #a6192e, #f0a500);
 }
