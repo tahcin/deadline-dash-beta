@@ -1,3 +1,4 @@
+--- START OF FILE styles (3).css ---
 /* Global Styles */
 * {
     margin: 0;
@@ -83,6 +84,8 @@ body.dark-mode h2 {
     color: #a6192e;
     letter-spacing: 1px;
     margin-top: 10px;
+    position: relative; /* ADDED: Ensure timer text is positioned relatively */
+    z-index: 1; /* ADDED: Make sure timer text is above other potential elements */
 }
 
 body.dark-mode #timer1,
@@ -101,6 +104,7 @@ body.dark-mode #timer4 {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer; /* Added cursor pointer to .event */
+    position: relative; /* ADDED: Ensure event box is relatively positioned for z-index context */
 }
 
 .event:hover {
@@ -508,4 +512,45 @@ input:checked + .reminder-slider:before {
 
 .reminder-toggle-label {
     margin-right: 15px;
+}
+
+/* Universal Reminder Button Style - ADDED */
+#reminderManagerToggle {
+    display: inline-block;
+    /* margin-top: 20px;  Removed as it's placed in HTML with margin-bottom */
+    padding: 12px 20px;
+    background: linear-gradient(135deg, #ddd, #eee); /* Light grey gradient, adjust as needed */
+    color: #333; /* Dark text for contrast */
+    font-weight: bold;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    font-size: 0.9em; /* Adjust font size if needed */
+    font-family: 'Montserrat', sans-serif; /* Use Montserrat font to match headings */
+    border: none; /* Remove default button border */
+}
+
+#reminderManagerToggle:hover {
+    background: linear-gradient(135deg, #eee, #fff); /* Lighter gradient on hover */
+    transform: translateY(-2px); /* Slight lift on hover */
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); /* Slightly stronger shadow on hover */
+}
+
+#reminderManagerToggle:active {
+    transform: scale(0.98); /* Slight press effect */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15); /* Reset shadow on press */
+}
+
+body.dark-mode #reminderManagerToggle {
+    background: linear-gradient(135deg, #444, #555); /* Dark mode grey gradient */
+    color: white; /* White text for dark mode */
+    box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1); /* Light shadow for dark mode */
+}
+
+body.dark-mode #reminderManagerToggle:hover {
+    background: linear-gradient(135deg, #555, #666); /* Lighter dark gradient on hover */
+    box-shadow: 0 6px 10px rgba(255, 255, 255, 0.2); /* Slightly stronger shadow in dark mode hover */
 }
