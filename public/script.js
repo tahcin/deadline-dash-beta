@@ -1,10 +1,12 @@
 document.addEventListener("DOMContentLoaded", function() {
     const toggleButton = document.getElementById("darkModeToggle");
+    const toggleIcon = document.getElementById("toggleIcon");
     const toggleText = document.getElementById("toggleText");
 
     // Check and apply the saved dark mode preference
     if (localStorage.getItem("darkMode") === "enabled") {
         document.body.classList.add("dark-mode");
+        toggleIcon.textContent = "☀️";
         toggleText.textContent = "Light Mode";
     }
 
@@ -14,110 +16,15 @@ document.addEventListener("DOMContentLoaded", function() {
 
         if (document.body.classList.contains("dark-mode")) {
             localStorage.setItem("darkMode", "enabled");
+            toggleIcon.textContent = "☀️";
             toggleText.textContent = "Light Mode";
         } else {
             localStorage.setItem("darkMode", "disabled");
+            toggleIcon.textContent = "🌙";
             toggleText.textContent = "Dark Mode";
         }
     });
-
-    // Button to enable notifications
-    const enableNotificationsButton = document.getElementById("enableNotifications");
-    if (enableNotificationsButton) {
-        enableNotificationsButton.addEventListener("click", function() {
-            console.log("Enable Notifications button clicked");
-            requestNotificationPermission();
-        });
-    } else {
-        console.error("Enable Notifications button not found");
-    }
 });
-
-// Request permission for notifications
-function requestNotificationPermission() {
-    if ('Notification' in window) {
-        Notification.requestPermission().then(permission => {
-            console.log("Notification permission status:", permission);
-            if (permission === 'granted') {
-                console.log('Notification permission granted.');
-                // Register the service worker
-                registerServiceWorker();
-            } else {
-                console.log('Notification permission denied.');
-            }
-        }).catch(error => {
-            console.error('Notification permission request failed:', error);
-        });
-    } else {
-        console.log('Browser does not support notifications.');
-    }
-}
-
-// Register the service worker
-function registerServiceWorker() {
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/sw.js').then(registration => {
-            console.log('Service Worker registered with scope:', registration.scope);
-            subscribeUser(registration);
-        }).catch(error => {
-            console.error('Service Worker registration failed:', error);
-        });
-    } else {
-        console.log('Browser does not support service workers.');
-    }
-}
-
-// Subscribe user for push notifications
-function subscribeUser(registration) {
-    if ('PushManager' in window) {
-        const vapidPublicKey = 'BEY0n3-H3bPxVfrCZ6x1MR9S0B2jmelnCLCipewOKB_GAPb_2hJcC8R7h0pcQs4t9pBdW9PWFiWwFYURbGkT8is';
-        const convertedVapidKey = urlBase64ToUint8Array(vapidPublicKey);
-        
-        registration.pushManager.subscribe({
-            userVisibleOnly: true,
-            applicationServerKey: convertedVapidKey
-        }).then(subscription => {
-            console.log('User is subscribed:', subscription);
-            // Send subscription to the server
-            sendSubscriptionToServer(subscription);
-        }).catch(error => {
-            console.error('Failed to subscribe the user:', error);
-        });
-    } else {
-        console.log('Browser does not support push notifications.');
-    }
-}
-
-// Utility function to convert VAPID key
-function urlBase64ToUint8Array(base64String) {
-    const padding = '='.repeat((4 - base64String.length % 4) % 4);
-    const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
-    const rawData = window.atob(base64);
-    const outputArray = new Uint8Array(rawData.length);
-
-    for (let i = 0; i < rawData.length; ++i) {
-        outputArray[i] = rawData.charCodeAt(i);
-    }
-    return outputArray;
-}
-
-// Send subscription to the server
-function sendSubscriptionToServer(subscription) {
-    fetch('/subscribe', {
-        method: 'POST',
-        body: JSON.stringify(subscription),
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    }).then(response => {
-        if (!response.ok) {
-            throw new Error('Failed to send subscription to server');
-        }
-        console.log('Subscription sent to server');
-    }).catch(error => {
-        console.error('Error sending subscription to server:', error);
-    });
-}
 
 // Function to update the countdown every second
 function startCountdown(id, eventDate) {
@@ -134,11 +41,6 @@ function startCountdown(id, eventDate) {
 
         countdownElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
 
-        // Send notification an hour before the event
-        if (distance > 0 && distance <= 3600000) {
-            sendNotification(id);
-        }
-
         if (distance < 0) {
             clearInterval(interval);
             countdownElement.innerHTML = "EXPIRED";
@@ -146,23 +48,8 @@ function startCountdown(id, eventDate) {
     }, 1000);
 }
 
-// Function to send a notification
-function sendNotification(id) {
-    if ('Notification' in window && navigator.serviceWorker) {
-        navigator.serviceWorker.ready.then(function(registration) {
-            console.log("Sending notification for event:", id);
-            registration.showNotification("Event Reminder", {
-                body: `An event is starting in 1 hour!`,
-                icon: '/images/favicon-32x32.png'
-            });
-        }).catch(error => {
-            console.error('Error showing notification:', error);
-        });
-    }
-}
-
 // Define event dates
-const event1Date = new Date("March 14, 2025 01:14:00").getTime();
+const event1Date = new Date("March 19, 2025 23:30:00").getTime();
 const event2Date = new Date("March 19, 2025 23:30:00").getTime();
 const event3Date = new Date("March 19, 2025 23:30:00").getTime();
 const event4Date = new Date("March 26, 2025 23:30:00").getTime();
@@ -173,12 +60,13 @@ startCountdown("timer2", event2Date);
 startCountdown("timer3", event3Date);
 startCountdown("timer4", event4Date);
 
+
 //buttons
 document.addEventListener("DOMContentLoaded", function () {
     const buttonLinks = {
-        countdown: "",
-        countdown2: "",
-        countdown3: "",
+        countdown1: "https://apps.iimbx.edu.in/learning/course/course-v1:IIMBx+AE21x+BBA_DBE_B1/block-v1:IIMBx+AE21x+BBA_DBE_B1+type@sequential+block@a30079406b774766945f7df7ba37c95b/block-v1:IIMBx+AE21x+BBA_DBE_B1+type@vertical+block@3d2d25f969b84b3b87395be337ec5300",  
+        countdown2: "https://apps.iimbx.edu.in/learning/course/course-v1:IIMBx+ES21x+BBA_DBE_B1/block-v1:IIMBx+ES21x+BBA_DBE_B1+type@sequential+block@6af5281590564e63870f26b57b78f841/block-v1:IIMBx+ES21x+BBA_DBE_B1+type@vertical+block@vertical7",
+        countdown3: "https://apps.iimbx.edu.in/learning/course/course-v1:IIMBx+PJ21x+BBA_DBE_B1/block-v1:IIMBx+PJ21x+BBA_DBE_B1+type@sequential+block@3f3d99591cb14a9e9a133b3583251766/block-v1:IIMBx+PJ21x+BBA_DBE_B1+type@vertical+block@27405e39773d443288c557c7f97d7822",
         countdown4: ""
     };
 
