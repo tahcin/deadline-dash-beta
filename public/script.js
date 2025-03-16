@@ -101,3 +101,44 @@ if ("serviceWorker" in navigator) {
     .catch(err => console.error("Service Worker registration failed", err));
 }
 
+
+
+//Push Notifications
+if ("serviceWorker" in navigator && "PushManager" in window) {
+    navigator.serviceWorker.register("/sw.js")
+        .then((registration) => {
+            console.log("Service Worker registered:", registration);
+            askPermission(registration);
+        })
+        .catch((error) => {
+            console.error("Service Worker registration failed:", error);
+        });
+}
+
+function askPermission(registration) {
+    Notification.requestPermission().then((permission) => {
+        if (permission === "granted") {
+            subscribeUserToPush(registration);
+        } else {
+            console.log("Notification permission denied.");
+        }
+    });
+}
+
+async function subscribeUserToPush(registration) {
+    const response = await fetch("/api/vapidPublicKey");
+    const { publicKey } = await response.json();
+
+    const subscription = await registration.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: publicKey
+    });
+
+    console.log("Push Subscription:", subscription);
+    await fetch("/api/subscribe", {
+        method: "POST",
+        body: JSON.stringify(subscription),
+        headers: { "Content-Type": "application/json" }
+    });
+}
+
