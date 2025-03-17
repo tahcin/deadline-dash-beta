@@ -8,7 +8,7 @@ const redis = createClient({
 await redis.connect();
 
 webpush.setVapidDetails(
-  "mailto:tahcin-49@gmail.com",
+  "mailto:your-email@example.com",
   process.env.VAPID_PUBLIC_KEY,
   process.env.VAPID_PRIVATE_KEY
 );
