@@ -1,25 +1,25 @@
-import { promises as fs } from "fs";
-import path from "path";
+import { createClient } from "redis";
 
-const filePath = path.join(process.cwd(), "subscriptions.json");
+const redis = createClient({
+  url: process.env.REDIS_URL,
+});
+
+await redis.connect();
 
 export default async function handler(req, res) {
-    if (req.method === "POST") {
-        const subscription = req.body;
-        let subscriptions = [];
+  if (req.method === "POST") {
+    try {
+      const subscription = req.body;
 
-        try {
-            const fileData = await fs.readFile(filePath, "utf-8");
-            subscriptions = JSON.parse(fileData);
-        } catch (err) {
-            console.error("Error reading file:", err);
-        }
+      // Store subscription in Redis
+      await redis.sAdd("subscriptions", JSON.stringify(subscription));
 
-        subscriptions.push(subscription);
-        await fs.writeFile(filePath, JSON.stringify(subscriptions));
-
-        res.status(201).json({ message: "Subscribed successfully" });
-    } else {
-        res.status(405).json({ message: "Method not allowed" });
+      res.status(201).json({ message: "Subscription saved successfully" });
+    } catch (error) {
+      console.error("Error saving subscription:", error);
+      res.status(500).json({ error: "Internal Server Error" });
     }
+  } else {
+    res.status(405).json({ error: "Method not allowed" });
+  }
 }
