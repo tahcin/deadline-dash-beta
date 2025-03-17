@@ -1,8 +1,8 @@
 {
   "name": "deadline-dash",
-  "version": "1.0.1",  
+  "version": "1.0.0",  
   "type": "module",
   "dependencies": {
-    "redis": "^4.0.0"
+    "redis": "^7.4.2"
   }
 }
