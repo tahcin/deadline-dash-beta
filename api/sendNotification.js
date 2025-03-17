@@ -1,31 +1,43 @@
 import webpush from "web-push";
-import { promises as fs } from "fs";
-import path from "path";
+import { createClient } from "redis";
 
-const publicKey = process.env.VAPID_PUBLIC_KEY;
-const privateKey = process.env.VAPID_PRIVATE_KEY;
+const redis = createClient({
+  url: process.env.REDIS_URL,
+});
 
-webpush.setVapidDetails("mailto:your@email.com", publicKey, privateKey);
+await redis.connect();
 
-const filePath = path.join(process.cwd(), "subscriptions.json");
+webpush.setVapidDetails(
+  "mailto:your-email@example.com",
+  process.env.VAPID_PUBLIC_KEY,
+  process.env.VAPID_PRIVATE_KEY
+);
 
 export default async function handler(req, res) {
-    if (req.method !== "POST") {
-        return res.status(405).json({ message: "Method not allowed" });
-    }
-
+  if (req.method === "POST") {
     try {
-        const { title, body } = req.body;
-        const fileData = await fs.readFile(filePath, "utf-8");
-        const subscriptions = JSON.parse(fileData);
+      const payload = JSON.stringify({ title: "New Notification", body: "This is a test message" });
 
-        subscriptions.forEach((subscription) => {
-            webpush.sendNotification(subscription, JSON.stringify({ title, body }))
-                .catch((err) => console.error("Push failed:", err));
-        });
+      // Retrieve all subscriptions from Redis
+      const subscriptions = await redis.sMembers("subscriptions");
 
-        res.status(200).json({ message: "Notifications sent" });
+      if (subscriptions.length === 0) {
+        return res.status(400).json({ error: "No subscribers found" });
+      }
+
+      // Send notifications to all subscribers
+      const sendPromises = subscriptions.map(sub =>
+        webpush.sendNotification(JSON.parse(sub), payload)
+      );
+
+      await Promise.all(sendPromises);
+
+      res.status(200).json({ message: "Notification sent successfully" });
     } catch (error) {
-        res.status(500).json({ error: error.message });
+      console.error("Error sending notification:", error);
+      res.status(500).json({ error: "Internal Server Error" });
     }
+  } else {
+    res.status(405).json({ error: "Method not allowed" });
+  }
 }
