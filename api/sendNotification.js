@@ -5,10 +5,12 @@ const redis = createClient({
   url: process.env.REDIS_URL,
 });
 
-await redis.connect();
+(async () => {
+  await redis.connect();
+})();
 
 webpush.setVapidDetails(
-  "mailto:your-email@example.com",
+  "mailto:tahcin49@gmail.com",
   process.env.VAPID_PUBLIC_KEY,
   process.env.VAPID_PRIVATE_KEY
 );
@@ -27,7 +29,10 @@ export default async function handler(req, res) {
 
       // Send notifications to all subscribers
       const sendPromises = subscriptions.map(sub =>
-        webpush.sendNotification(JSON.parse(sub), payload)
+        webpush.sendNotification(JSON.parse(sub), payload).catch(err => {
+          console.error('Notification failed to send:', err);
+          // Handle individual notification errors if needed
+        })
       );
 
       await Promise.all(sendPromises);
