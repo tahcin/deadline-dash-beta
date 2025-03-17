@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "dependencies": {
-    "yallist": "^4.0.0",
-    "redis": "^4.6.6"
-  }
+  "@redis/client": "^1.0.0",
+  "yallist": "^4.0.0"
+}
 }
