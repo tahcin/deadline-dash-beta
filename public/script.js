@@ -142,3 +142,10 @@ async function subscribeUserToPush(registration) {
     });
 }
 
+async function getVapidPublicKey() {
+    const response = await fetch("/api/vapidPublicKey");
+    if (!response.ok) throw new Error("Failed to fetch VAPID public key");
+    const data = await response.json();
+    return data.publicKey;
+}
+
