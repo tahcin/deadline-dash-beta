@@ -1,5 +1,5 @@
 import webpush from "web-push";
-import { createClient } from "redis";
+import { createClient } from "@redis/client";
 
 const redis = createClient({
   url: process.env.REDIS_URL,
