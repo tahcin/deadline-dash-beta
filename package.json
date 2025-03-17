@@ -3,6 +3,6 @@
   "version": "1.0.0",  
   "type": "module",
   "dependencies": {
-    "redis": "^7.2.7"
+    "redis": "^7.0.0"
   }
 }
