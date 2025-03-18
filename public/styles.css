@@ -15,6 +15,90 @@ body {
     transition: background 0.3s ease, color 0.3s ease;
     display: flex; /* Enable flexbox for body */
     flex-direction: column; /* Stack elements vertically */
+    position: relative; /* For sidebar positioning */
+}
+
+/* Sidebar Styles */
+.sidebar {
+    position: fixed;
+    top: 0;
+    right: -250px; /* Initially hidden off-screen */
+    width: 250px;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.95); /* Slightly opaque white */
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+    padding-top: 60px; /* Space for logo or title if needed */
+    transition: right 0.3s ease;
+    z-index: 1000; /* Ensure it's on top of other content */
+    overflow-y: auto; /* In case content overflows */
+    text-align: left; /* Align sidebar text to left */
+}
+
+body.dark-mode .sidebar {
+    background: rgba(20, 20, 20, 0.95); /* Dark mode sidebar background */
+    box-shadow: -2px 0 5px rgba(255, 255, 255, 0.2);
+}
+
+.sidebar.open {
+    right: 0; /* Slide in the sidebar */
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px; /* Add some space below "Navigation" title */
+}
+
+.sidebar li {
+    padding: 15px 20px;
+    border-bottom: 1px solid #eee; /* Light border to separate links */
+}
+
+body.dark-mode .sidebar li {
+    border-bottom: 1px solid #444; /* Dark mode border color */
+}
+
+.sidebar li:last-child {
+    border-bottom: none; /* Remove border from last item */
+}
+
+.sidebar a, .sidebar button {
+    display: block; /* Make links and button full width of li */
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+    text-align: left; /* Ensure text is left-aligned */
+    background: none; /* Remove default button background */
+    border: none; /* Remove default button border */
+    padding: 0; /* Reset padding for button inside li */
+    font-size: inherit; /* Inherit font size from parent */
+    font-family: inherit; /* Inherit font family */
+    cursor: pointer; /* Show pointer cursor on hover */
+}
+
+body.dark-mode .sidebar a, body.dark-mode .sidebar button {
+    color: #f5f5f5; /* Dark mode link color */
+}
+
+.sidebar a:hover, .sidebar button:hover {
+    color: #a6192e; /* Hover color */
+}
+
+body.dark-mode .sidebar a:hover, body.dark-mode .sidebar button:hover {
+    color: #f0a500; /* Dark mode hover color */
+}
+
+/* Hamburger Button */
+.hamburger-menu {
+    display: none; /* Hidden by default on larger screens */
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
     min-height: 100vh; /* Ensure body takes at least full viewport height */
 }
 
@@ -48,6 +132,7 @@ nav li {
     margin: 0 15px;
 }
 
+.nav-links li:last-child { /* Target only nav links in header, not sidebar */
 nav li:first-child {
     margin-left: 0;
 }
@@ -73,6 +158,7 @@ body.dark-mode nav a:hover {
 
 /* Modern Toggle Switch */
 .dark-mode-toggle {
+    margin-left: 20px; /* Add spacing to the left of toggle */
     display: flex;
     align-items: center;
 }
@@ -154,7 +240,7 @@ input:checked + .slider:before {
     margin-top: 20px;
 }
 
-#installButton {
+#installButton, .install-button-nav {
     background: linear-gradient(135deg, #4CAF50, #8BC34A);
     color: white;
     border: none;
@@ -168,26 +254,26 @@ input:checked + .slider:before {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-#installButton:hover {
+#installButton:hover, .install-button-nav:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
 }
 
-#installButton:active {
+#installButton:active, .install-button-nav:active {
     transform: scale(0.98);
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
 }
 
-body.dark-mode #installButton {
+body.dark-mode #installButton, body.dark-mode .install-button-nav {
     background: linear-gradient(135deg, #8BC34A, #4CAF50); /* Slightly adjust for dark mode */
     box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
 }
 
-body.dark-mode #installButton:hover {
+body.dark-mode #installButton:hover, body.dark-mode .install-button-nav:hover {
     box-shadow: 0 6px 12px rgba(255, 255, 255, 0.25);
 }
 
-body.dark-mode #installButton:active {
+body.dark-mode #installButton:active, body.dark-mode .install-button-nav:active {
     box-shadow: 0 3px 6px rgba(255, 255, 255, 0.2);
 }
 
@@ -341,6 +427,11 @@ body.dark-mode footer a {
     nav ul {
         flex-direction: column;
         align-items: flex-start; /* Align links to the start on smaller screens */
+        display: none; /* Hide standard nav links on smaller screens */
+    }
+
+    .hamburger-menu {
+        display: block; /* Show hamburger menu on smaller screens */
     }
 }
 
