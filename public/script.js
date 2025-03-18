@@ -10,9 +10,9 @@ document.addEventListener("DOMContentLoaded", function() {
     toggleButton.addEventListener("click", function() {
         body.classList.toggle("dark-mode");
         if (body.classList.contains("dark-mode")) {
-            localStorage.setItem("darkMode", "disabled");
-        } else {
             localStorage.setItem("darkMode", "enabled");
+        } else {
+            localStorage.setItem("darkMode", "disabled");
         }
     });
 });
