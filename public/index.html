@@ -1,3 +1,4 @@
+--- START OF FILE index.html ---
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -61,14 +62,35 @@
         <a href="/" class="logo-link">
             <img src="/images/bbadbe.jpg" alt="BBA DBE Logo" class="logo" style="max-width: 80px;">
         </a>
-        <ul>
+        <ul class="nav-links">
             <li><a href="#countdown-section">CLA/Mid Term</a></li>
             <li><a href="#live-sessions-section">Live Sessions</a></li>
+            <li><button id="installButtonNav" class="install-button-nav">Install App</button></li>
             <li class="dark-mode-toggle">
                 <label class="switch">
                     <input type="checkbox" id="darkModeToggle">
                     <span class="slider round"></span>
                 </label> <span class="toggle-text">Dark Mode</span>
+            </li>
+
+        </ul>
+        <button class="hamburger-menu" aria-label="Navigation Menu">
+            ☰
+        </button>
+    </nav>
+
+    <aside class="sidebar">
+        <ul class="sidebar-nav">
+            <li><a href="#countdown-section">CLA/Mid Term</a></li>
+            <li><a href="#live-sessions-section">Live Sessions</a></li>
+            <li style="border-bottom: none;">
+                <button id="installButtonSidebar" class="install-button-nav" style="width:100%; text-align:left;">Install App</button>
+            </li>
+             <li style="border-bottom: none; padding-top: 20px; padding-bottom: 0px; text-align: center;">
+                 <label class="switch" style="display: inline-block;">
+                    <input type="checkbox" id="darkModeToggleSidebar" style="position: absolute; opacity: 0; width: 0; height: 0;">
+                    <span class="slider round"></span>
+                </label> <span class="toggle-text" style="display: inline-block; margin-left: 10px;">Dark Mode</span>
             </li>
         </ul>
     </nav>
@@ -138,7 +160,7 @@
     <script defer src="/_vercel/speed-insights/script.js"></script>
     <script src="/script.js"></script>
 </body>
-<div class="install-btn-container">
+<div class="install-btn-container" style="margin-top: 0px;">
     <button id="installButton" class="hidden">Install App</button>
 </div>
 
