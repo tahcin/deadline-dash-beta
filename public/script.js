@@ -105,7 +105,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
   deferredInstallPrompt = e;
   installButton.classList.remove('hidden');
-  installButtonNav.style.display = 'block';
+  installButtonNav.style.display = 'inline-block';
   installButtonSidebar.style.display = 'block';
 });
 
@@ -160,9 +160,13 @@ document.addEventListener('DOMContentLoaded', function() {
 document.addEventListener('DOMContentLoaded', function() {
     const toggleButtonSidebar = document.getElementById("darkModeToggleSidebar");
     const body = document.body;
+    const toggleButton = document.getElementById("darkModeToggle");
+
 
     toggleButtonSidebar.addEventListener("click", function() {
         body.classList.toggle("dark-mode");
+        toggleButton.checked = toggleButtonSidebar.checked; // Sync main toggle
+
         if (body.classList.contains("dark-mode")) {
             localStorage.setItem("darkMode", "enabled");
         } else {
@@ -174,5 +178,6 @@ document.addEventListener('DOMContentLoaded', function() {
     if (localStorage.getItem("darkMode") === "enabled") {
         document.body.classList.add("dark-mode");
         toggleButtonSidebar.checked = true;
+        toggleButton.checked = true; // Ensure main toggle is also checked on load
     }
 });
