@@ -277,7 +277,7 @@ body.dark-mode #installButton:active, body.dark-mode .install-button-nav:active 
     box-shadow: 0 3px 6px rgba(255, 255, 255, 0.2);
 }
 
-#installButton.hidden {
+#installButton.hidden, .install-button-nav {
     display: none;
 }
 
@@ -432,6 +432,9 @@ body.dark-mode footer a {
 
     .hamburger-menu {
         display: block; /* Show hamburger menu on smaller screens */
+    }
+     .install-button-nav {
+        display: none; /* Hide install button in nav for larger screens */
     }
 }
 
