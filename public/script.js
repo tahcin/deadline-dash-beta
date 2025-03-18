@@ -1,27 +1,18 @@
 document.addEventListener("DOMContentLoaded", function() {
     const toggleButton = document.getElementById("darkModeToggle");
-    const toggleIcon = document.getElementById("toggleIcon");
-    const toggleText = document.getElementById("toggleText");
-
-    // Check and apply the saved dark mode preference
+    const body = document.body;
+        // Check and apply the saved dark mode preference
     if (localStorage.getItem("darkMode") === "enabled") {
         document.body.classList.add("dark-mode");
-        toggleIcon.textContent = "☀️";
-        toggleText.textContent = "Light Mode";
     }
 
     // Toggle dark mode function
     toggleButton.addEventListener("click", function() {
-        document.body.classList.toggle("dark-mode");
-
-        if (document.body.classList.contains("dark-mode")) {
+        body.classList.toggle("dark-mode");
+        if (body.classList.contains("dark-mode")) {
             localStorage.setItem("darkMode", "enabled");
-            toggleIcon.textContent = "☀️";
-            toggleText.textContent = "Light Mode";
         } else {
             localStorage.setItem("darkMode", "disabled");
-            toggleIcon.textContent = "🌙";
-            toggleText.textContent = "Dark Mode";
         }
     });
 });
@@ -64,11 +55,11 @@ startCountdown("timer4", event4Date);
 //buttons
 document.addEventListener("DOMContentLoaded", function () {
     const buttonLinks = {
-        countdown1: "https://apps.iimbx.edu.in/learning/course/course-v1:IIMBx+AE21x+BBA_DBE_B1/block-v1:IIMBx+AE21x+BBA_DBE_B1+type@sequential+block@a30079406b774766945f7df7ba37c95b/block-v1:IIMBx+AE21x+BBA_DBE_B1+type@vertical+block@3d2d25f969b84b3b87395be337ec5300",  
+        countdown1: "https://apps.iimbx.edu.in/learning/course/course-v1:IIMBx+AE21x+BBA_DBE_B1/block-v1:IIMBx+AE21x+BBA_DBE_B1+type@sequential+block@a30079406b774766945f7df7ba37c95b/block-v1:IIMBx+AE21x+BBA_DBE_B1+type@vertical+block@3d2d25f969b84b3b87395be337ec5300",
         countdown2: "https://apps.iimbx.edu.in/learning/course/course-v1:IIMBx+ES21x+BBA_DBE_B1/block-v1:IIMBx+ES21x+BBA_DBE_B1+type@sequential+block@6af5281590564e63870f26b57b78f841/block-v1:IIMBx+ES21x+BBA_DBE_B1+type@vertical+block@vertical7",
         countdown3: "https://apps.iimbx.edu.in/learning/course/course-v1:IIMBx+PJ21x+BBA_DBE_B1/block-v1:IIMBx+PJ21x+BBA_DBE_B1+type@sequential+block@3f3d99591cb14a9e9a133b3583251766/block-v1:IIMBx+PJ21x+BBA_DBE_B1+type@vertical+block@27405e39773d443288c557c7f97d7822",
         countdown4: ""
-    };
+     };
 
     document.querySelectorAll(".event").forEach(eventBox => {
         eventBox.style.cursor = "pointer"; // Make it clear it's clickable
@@ -93,59 +84,34 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
+
 //PWA
-
 if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("/service-worker.js")
-    .then(reg => console.log("Service Worker Registered!", reg))
-    .catch(err => console.error("Service Worker registration failed", err));
-}
-
-
-
-//Push Notifications
-if ("serviceWorker" in navigator && "PushManager" in window) {
-    navigator.serviceWorker.register("/sw.js")
-        .then((registration) => {
-            console.log("Service Worker registered:", registration);
-            askPermission(registration);
-        })
-        .catch((error) => {
-            console.error("Service Worker registration failed:", error);
-        });
-}
-
-function askPermission(registration) {
-    Notification.requestPermission().then((permission) => {
-        if (permission === "granted") {
-            subscribeUserToPush(registration);
-        } else {
-            console.log("Notification permission denied.");
-        }
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("/service-worker.js").then(() => {
+      console.log("Service Worker Registered");
     });
+  });
 }
 
-async function subscribeUserToPush(registration) {
-    const response = await fetch("/api/vapidPublicKey");
-    const { publicKey } = await response.json();
+let deferredInstallPrompt;
+const installButton = document.getElementById('installButton');
 
-    const subscription = await registration.pushManager.subscribe({
-        userVisibleOnly: true,
-        applicationServerKey: publicKey
-    });
+window.addEventListener('beforeinstallprompt', (e) => {
+  console.log('beforeinstallprompt fired');
+  e.preventDefault();
+  deferredInstallPrompt = e;
+  installButton.classList.remove('hidden');
+});
 
-    console.log("Push Subscription:", subscription);
-    await fetch("/api/subscribe", {
-        method: "POST",
-        body: JSON.stringify(subscription),
-        headers: { "Content-Type": "application/json" }
-    });
-}
+installButton.addEventListener('click', async () => {
+  if (deferredInstallPrompt) {
+    deferredInstallPrompt.prompt();
+    const { outcome } = await deferredInstallPrompt.userChoice;
+    console.log(`User response to the install prompt: ${outcome}`);
+    deferredInstallPrompt = null;
+    installButton.classList.add('hidden');
+  }
+});
 
-async function getVapidPublicKey() {
-    const response = await fetch("/api/vapidPublicKey");
-    if (!response.ok) throw new Error("Failed to fetch VAPID public key");
-    const data = await response.json();
-    return data.publicKey;
-}
-
+window.addEventListener('appinstalled', () => { console.log('appinstalled fired', deferredInstallPrompt); deferredInstallPrompt = null; });
