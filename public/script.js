@@ -96,12 +96,17 @@ if ("serviceWorker" in navigator) {
 
 let deferredInstallPrompt;
 const installButton = document.getElementById('installButton');
+const installButtonNav = document.getElementById('installButtonNav');
+const installButtonSidebar = document.getElementById('installButtonSidebar');
+
 
 window.addEventListener('beforeinstallprompt', (e) => {
   console.log('beforeinstallprompt fired');
   e.preventDefault();
   deferredInstallPrompt = e;
   installButton.classList.remove('hidden');
+  installButtonNav.style.display = 'block';
+  installButtonSidebar.style.display = 'block';
 });
 
 installButton.addEventListener('click', async () => {
@@ -111,7 +116,63 @@ installButton.addEventListener('click', async () => {
     console.log(`User response to the install prompt: ${outcome}`);
     deferredInstallPrompt = null;
     installButton.classList.add('hidden');
+    installButtonNav.style.display = 'none';
+    installButtonSidebar.style.display = 'none';
   }
 });
 
+installButtonNav.addEventListener('click', async () => {
+  if (deferredInstallPrompt) {
+    deferredInstallPrompt.prompt();
+    const { outcome } = await deferredInstallPrompt.userChoice;
+    console.log(`User response to the install prompt: ${outcome}`);
+    deferredInstallPrompt = null;
+    installButton.classList.add('hidden');
+    installButtonNav.style.display = 'none';
+    installButtonSidebar.style.display = 'none';
+  }
+});
+
+installButtonSidebar.addEventListener('click', async () => {
+  if (deferredInstallPrompt) {
+    deferredInstallPrompt.prompt();
+    const { outcome } = await deferredInstallPrompt.userChoice;
+    console.log(`User response to the install prompt: ${outcome}`);
+    deferredInstallPrompt = null;
+    installButton.classList.add('hidden');
+    installButtonNav.style.display = 'none';
+    installButtonSidebar.style.display = 'none';
+  }
+});
+
+
 window.addEventListener('appinstalled', () => { console.log('appinstalled fired', deferredInstallPrompt); deferredInstallPrompt = null; });
+
+// Sidebar functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const hamburger = document.querySelector('.hamburger-menu');
+    const sidebar = document.querySelector('.sidebar');
+
+    hamburger.addEventListener('click', () => sidebar.classList.toggle('open'));
+});
+
+// Dark mode toggle for sidebar
+document.addEventListener('DOMContentLoaded', function() {
+    const toggleButtonSidebar = document.getElementById("darkModeToggleSidebar");
+    const body = document.body;
+
+    toggleButtonSidebar.addEventListener("click", function() {
+        body.classList.toggle("dark-mode");
+        if (body.classList.contains("dark-mode")) {
+            localStorage.setItem("darkMode", "enabled");
+        } else {
+            localStorage.setItem("darkMode", "disabled");
+        }
+    });
+
+    // Sync sidebar toggle with main toggle on page load
+    if (localStorage.getItem("darkMode") === "enabled") {
+        document.body.classList.add("dark-mode");
+        toggleButtonSidebar.checked = true;
+    }
+});
