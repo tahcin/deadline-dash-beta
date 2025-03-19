@@ -68,7 +68,7 @@ body.dark-mode .nav-logo .logo-text {
 .nav-links {
     display: flex;
     align-items: center;
-    justify-content: flex-start; /* Changed to flex-start to align items to the start */
+    justify-content: flex-end; /* Changed to flex-end to push nav-items to right */
     width: 100%; /* Take full width to allow space-between to work */
 }
 
@@ -78,7 +78,7 @@ body.dark-mode .nav-logo .logo-text {
     margin: 0;
     display: flex;
     align-items: center;
-    margin-right: auto; /* Push navigation items to the left and controls to the right */
+    margin-right: 20px; /* Add some right margin to nav-items for spacing from controls */
 }
 
 .nav-items li {
@@ -116,10 +116,10 @@ body.dark-mode .nav-items li a:hover {
 }
 
 .nav-controls > div { /* Directly target list items or divs within nav-controls */
-    margin-left: 25px; /* Spacing between controls */
+    margin-left: 20px; /* Spacing between controls - reduced from 25px */
 }
 .nav-controls > div:first-child {
-    margin-left: 25px; /* Spacing from nav links */
+    margin-left: 0px; /* Spacing from nav links - set to 0 now as nav-items have right margin */
 }
 
 
@@ -130,11 +130,12 @@ body.dark-mode .nav-items li a:hover {
 }
 
 .dark-mode-toggle .toggle-label {
-    margin-right: 10px;
+    margin-right: 0px; /* remove label text margin */
     font-weight: 500;
     color: #333;
     transition: color 0.3s ease;
     user-select: none; /* prevent text selection while toggling */
+    display: none; /* Hide "Dark Mode" label text in navbar */
 }
 body.dark-mode .dark-mode-toggle .toggle-label {
     color: #f5f5f5;
@@ -147,21 +148,21 @@ body.dark-mode .dark-mode-toggle .toggle-label {
 }
 
 .dark-mode-label {
-    background-color: #ddd;
+    background-color: #777; /* Gray background when off */
     display: flex;
     align-items: center;
     justify-content: space-between;
     cursor: pointer;
-    width: 50px;
-    height: 25px;
-    border-radius: 25px;
+    width: 60px; /* increased width */
+    height: 30px; /* increased height */
+    border-radius: 30px; /* adjust border-radius to match height */
     position: relative;
     padding: 5px;
     transition: background-color 0.3s ease;
 }
 
 body.dark-mode .dark-mode-label {
-    background-color: #444;
+    background-color: #222; /* Dark background when dark mode on */
 }
 
 .dark-mode-slider {
@@ -169,23 +170,51 @@ body.dark-mode .dark-mode-label {
     position: absolute;
     top: 0;
     left: 0;
-    width: 25px; /* Half of label width */
-    height: 25px; /* Same as label height */
+    width: 30px; /* Half of label width */
+    height: 30px; /* Same as label height */
     border-radius: 50%;
     transition: transform 0.3s ease;
 }
 
 .dark-mode-checkbox:checked + .dark-mode-label .dark-mode-slider {
-    transform: translateX(25px); /* Move to the right by slider width */
+    transform: translateX(30px); /* Move to the right by slider width */
+}
+
+.dark-mode-icon {
+    position: absolute;
+    top: 7px;
+    font-size: 16px;
+    color: #fff; /* Icon color white */
+}
+
+.dark-mode-icon.moon {
+    left: 7px; /* Position moon icon on the left */
+    opacity: 0; /* Initially hide moon icon */
+    transition: opacity 0.3s;
+}
+
+.dark-mode-icon.sun {
+    right: 7px; /* Position sun icon on the right */
+    opacity: 1; /* Initially show sun icon */
+    transition: opacity 0.3s;
+}
+
+
+.dark-mode-checkbox:checked + .dark-mode-label .dark-mode-icon.moon {
+    opacity: 1; /* Show moon icon in dark mode */
+}
+
+.dark-mode-checkbox:checked + .dark-mode-label .dark-mode-icon.sun {
+    opacity: 0; /* Hide sun icon in dark mode */
 }
 
 
 /* Install Button in Nav */
 .install-button {
-    background: linear-gradient(135deg, #a6192e, #f0a500);
+    background: linear-gradient(135deg, #ffbb00, #ff6600); /* Orange gradient for install button */
     color: white;
     border: none;
-    padding: 8px 15px;
+    padding: 10px 20px; /* Increased padding */
     border-radius: 8px;
     cursor: pointer;
     font-weight: bold;
@@ -193,7 +222,7 @@ body.dark-mode .dark-mode-label {
 }
 
 .install-button:hover {
-    background: linear-gradient(135deg, #f0a500, #a6192e);
+    background: linear-gradient(135deg, #ff6600, #ffbb00); /* Reversed gradient on hover */
     transform: scale(1.05);
 }
 
@@ -202,8 +231,9 @@ body.dark-mode .dark-mode-label {
 }
 
 body.dark-mode .install-button {
-    background: linear-gradient(135deg, #f0a500, #a6192e);
+    background: linear-gradient(135deg, #ffbb00, #ff6600); /* Keep orange gradient in dark mode */
 }
+
 
 /* Mobile Navigation Icon */
 .nav-icon {
@@ -310,6 +340,7 @@ body.dark-mode .sidebar .close-btn {
 }
 .sidebar-dark-mode-toggle .toggle-label {
     margin-right: 10px; /* Add margin for label in sidebar too, if needed */
+     display: inline; /* Show "Dark Mode" label text in sidebar */
 }
 
 
