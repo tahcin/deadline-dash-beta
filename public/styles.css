@@ -199,9 +199,14 @@ body.dark-mode .dark-mode-label {
     transition: opacity 0.3s;
 }
 
+.dark-mode-checkbox:checked + .dark-mode-label .dark-mode-slider {
+    transform: translateX(30px);  /*  <----  PUT IT HERE, AND ONLY HERE (for slider movement) */
+    /* ... other styles for the slider in dark mode can also be here ... */
+}
 
 .dark-mode-checkbox:checked + .dark-mode-label .dark-mode-icon.moon {
     opacity: 1; /* Show moon icon in dark mode */
+    
 }
 
 .dark-mode-checkbox:checked + .dark-mode-label .dark-mode-icon.sun {
