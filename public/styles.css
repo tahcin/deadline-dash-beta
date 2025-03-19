@@ -267,6 +267,8 @@ body.dark-mode .nav-icon {
     transition: 0.5s;
     text-align: left;
     box-shadow: -2px 0px 5px rgba(0,0,0,0.2); /* Subtle shadow on the left edge */
+    display: flex; /* Make sidebar a flex container */
+    flex-direction: column; /* Stack items vertically */
 }
 
 body.dark-mode .sidebar {
@@ -274,6 +276,14 @@ body.dark-mode .sidebar {
     box-shadow: -2px 0px 5px rgba(255,255,255,0.1);
 }
 
+.sidebar-links {
+    flex: 1; /* Let this grow to take up available space */
+}
+
+.sidebar-footer {
+    margin-top: auto; /* Push to the bottom */
+    padding-bottom: 20px;
+}
 
 .sidebar a {
     padding: 15px 25px;
@@ -316,7 +326,7 @@ body.dark-mode .sidebar .close-btn {
     align-items: center; /* Vertically align items */
     justify-content: flex-start; /* Align items to the start of the container */
     padding: 10px 25px; /* Add padding to match sidebar links */
-    margin-top: 60vh;
+    margin-top: 0; /* Remove the 60vh margin */
     margin-bottom: 15px;
 }
 
