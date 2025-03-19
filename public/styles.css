@@ -10,171 +10,9 @@ body {
     background: linear-gradient(135deg, #f8f8f8, #d1d1d1);
     color: #333;
     text-align: center;
-    padding: 0px 20px;
+    padding: 0px; /* Removed padding from body for full width nav */
     line-height: 1.5;
     transition: background 0.3s ease, color 0.3s ease;
-    display: flex; /* Enable flexbox for body */
-    flex-direction: column; /* Stack elements vertically */
-    position: relative; /* For sidebar positioning */
-}
-
-/* Sidebar Styles */
-.sidebar {
-    position: fixed;
-    top: 0;
-    right: -250px; /* Initially hidden off-screen */
-    width: 250px;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.95); /* Slightly opaque white */
-    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
-    padding-top: 60px; /* Space for logo or title if needed */
-    transition: right 0.3s ease;
-    z-index: 1000; /* Ensure it's on top of other content */
-    overflow-y: auto; /* In case content overflows */
-    text-align: left; /* Align sidebar text to left */
-}
-
-body.dark-mode .sidebar {
-    background: rgba(20, 20, 20, 0.95); /* Dark mode sidebar background */
-    box-shadow: -2px 0 5px rgba(255, 255, 255, 0.2);
-}
-
-.sidebar.open {
-    right: 0; /* Slide in the sidebar */
-}
-
-.sidebar ul {
-    list-style: none;
-    padding: 0;
-    margin-top: 20px; /* Add some space below "Navigation" title */
-}
-
-.sidebar li {
-    padding: 15px 20px;
-    border-bottom: 1px solid #eee; /* Light border to separate links */
-}
-
-body.dark-mode .sidebar li {
-    border-bottom: 1px solid #444; /* Dark mode border color */
-}
-
-.sidebar li:last-child {
-    border-bottom: none; /* Remove border from last item */
-}
-
-.sidebar a, .sidebar button {
-    display: block; /* Make links and button full width of li */
-    color: #333;
-    text-decoration: none;
-    font-weight: bold;
-    transition: color 0.3s;
-    text-align: left; /* Ensure text is left-aligned */
-    background: none; /* Remove default button background */
-    border: none; /* Remove default button border */
-    padding: 0; /* Reset padding for button inside li */
-    font-size: inherit; /* Inherit font size from parent */
-    font-family: inherit; /* Inherit font family */
-    cursor: pointer; /* Show pointer cursor on hover */
-}
-
-body.dark-mode .sidebar a, body.dark-mode .sidebar button {
-    color: #f5f5f5; /* Dark mode link color */
-}
-
-.sidebar a:hover, .sidebar button:hover {
-    color: #a6192e; /* Hover color */
-}
-
-body.dark-mode .sidebar a:hover, body.dark-mode .sidebar button:hover {
-    color: #f0a500; /* Dark mode hover color */
-}
-
-/* Hamburger Button */
-.hamburger-menu {
-    display: none; /* Hidden by default on larger screens */
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background: none;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-    min-height: 100vh; /* Ensure body takes at least full viewport height */
-}
-
-/* Navigation Bar */
-nav {
-    background: rgba(255, 255, 255, 0.9);
-    padding: 15px 20px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    border-radius: 0 0 12px 12px;
-    margin-bottom: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: background 0.3s, box-shadow 0.3s;
-}
-
-body.dark-mode nav {
-    background: rgba(20, 20, 20, 0.9);
-    box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
-}
-
-nav ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    align-items: center; /* Vertically align items */
-}
-
-nav li {
-    margin: 0 15px;
-}
-
-.nav-links li:last-child { /* Target only nav links in header, not sidebar */
-nav li:first-child {
-    margin-left: 0;
-}
-
-nav a {
-    text-decoration: none;
-    color: #333;
-    font-weight: bold;
-    transition: color 0.3s;
-}
-
-body.dark-mode nav a {
-    color: #f5f5f5;
-}
-
-nav a:hover {
-    color: #a6192e;
-}
-
-body.dark-mode nav a:hover {
-    color: #f0a500;
-}
-
-/* Modern Toggle Switch */
-.dark-mode-toggle {
-    margin-left: 20px; /* Add spacing to the left of toggle */
-    display: flex;
-    align-items: center;
-}
-
-.dark-mode-toggle label {
-    position: relative;
-    display: inline-block;
-    width: 50px;
-    height: 24px;
-}
-
-.dark-mode-toggle input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-
 }
 
 /* Dark Mode */
@@ -183,103 +21,270 @@ body.dark-mode {
     color: #f5f5f5;
 }
 
-.slider {
+/* Container for content to not be full width and respect padding */
+.container {
+    padding: 20px;
+}
+
+
+/* Navigation Bar Styles */
+.nav-bar {
+    background: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    position: sticky; /* Sticky navbar */
+    top: 0;
+    z-index: 100; /* Ensure it's above other content */
+    transition: background 0.3s ease;
+}
+
+body.dark-mode .nav-bar {
+    background: #1a1a1a;
+    box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
+}
+
+.nav-logo {
+    display: flex;
+    align-items: center;
+}
+
+.nav-logo .logo {
+    max-width: 50px;
+    height: auto;
+    margin-right: 10px;
+}
+
+.nav-logo .logo-text {
+    color: #a6192e;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    text-decoration: none;
+    font-size: 1.4em;
+}
+
+body.dark-mode .nav-logo .logo-text {
+    color: #f0a500;
+}
+
+
+.nav-links ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+.nav-links li {
+    margin-left: 25px;
+}
+
+.nav-links li:first-child {
+    margin-left: 0;
+}
+
+.nav-links li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+body.dark-mode .nav-links li a {
+    color: #f5f5f5;
+}
+
+.nav-links li a:hover {
+    color: #a6192e;
+}
+
+body.dark-mode .nav-links li a:hover {
+    color: #f0a500;
+}
+
+
+/* Dark Mode Toggle Switch */
+.dark-mode-toggle {
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+}
+
+.dark-mode-checkbox {
+    opacity: 0;
     position: absolute;
+}
+
+.dark-mode-label {
+    background-color: #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     cursor: pointer;
+    width: 50px;
+    height: 25px;
+    border-radius: 25px;
+    position: relative;
+    padding: 5px;
+    transition: background-color 0.3s ease;
+}
+
+body.dark-mode .dark-mode-label {
+    background-color: #444;
+}
+
+.dark-mode-slider {
+    background-color: white;
+    position: absolute;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    transition: .4s;
-    border-radius: 34px;
-}
-
-.slider:before {
-    position: absolute;
-    content: "";
-    height: 18px;
-    width: 18px;
-    left: 4px;
-    bottom: 3px;
-    background-color: white;
-    transition: .4s;
+    width: 25px; /* Half of label width */
+    height: 25px; /* Same as label height */
     border-radius: 50%;
+    transition: transform 0.3s ease;
 }
 
-input:checked + .slider {
-    background-color: #2196F3;
+.dark-mode-checkbox:checked + .dark-mode-label .dark-mode-slider {
+    transform: translateX(25px); /* Move to the right by slider width */
 }
 
-input:focus + .slider {
-    box-shadow: 0 0 1px #2196F3;
-}
 
-input:checked + .slider:before {
-    transform: translateX(26px);
-}
-
-/* Rounded sliders */
-.slider.round {
-    border-radius: 34px;
-}
-
-.slider.round:before {
-    border-radius: 50%;
-}
-
-.toggle-text {
-    margin-left: 8px;
-    font-weight: bold;
-}
-
-/* Install Button */
-.install-btn-container {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-}
-
-#installButton, .install-button-nav {
-    background: linear-gradient(135deg, #4CAF50, #8BC34A);
+/* Install Button in Nav */
+.install-button {
+    background: linear-gradient(135deg, #a6192e, #f0a500);
     color: white;
     border: none;
-    padding: 12px 24px;
+    padding: 8px 15px;
     border-radius: 8px;
     cursor: pointer;
     font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-#installButton:hover, .install-button-nav:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+.install-button:hover {
+    background: linear-gradient(135deg, #f0a500, #a6192e);
+    transform: scale(1.05);
 }
 
-#installButton:active, .install-button-nav:active {
+.install-button:active {
     transform: scale(0.98);
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
 }
 
-body.dark-mode #installButton, body.dark-mode .install-button-nav {
-    background: linear-gradient(135deg, #8BC34A, #4CAF50); /* Slightly adjust for dark mode */
-    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
+body.dark-mode .install-button {
+    background: linear-gradient(135deg, #f0a500, #a6192e);
 }
 
-body.dark-mode #installButton:hover, body.dark-mode .install-button-nav:hover {
-    box-shadow: 0 6px 12px rgba(255, 255, 255, 0.25);
+/* Mobile Navigation Icon */
+.nav-icon {
+    display: none; /* Hidden by default on larger screens */
+    font-size: 1.8em;
+    cursor: pointer;
+    color: #333;
 }
 
-body.dark-mode #installButton:active, body.dark-mode .install-button-nav:active {
-    box-shadow: 0 3px 6px rgba(255, 255, 255, 0.2);
+body.dark-mode .nav-icon {
+    color: #f5f5f5;
 }
 
-#installButton.hidden, .install-button-nav {
-    display: none;
+
+/* Sidebar Styles */
+.sidebar {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 101; /* Higher than navbar */
+    top: 0;
+    right: 0;
+    background-color: #f8f8f8; /* Light background for sidebar */
+    overflow-x: hidden;
+    padding-top: 60px;
+    transition: 0.5s;
+    text-align: left;
+    box-shadow: -2px 0px 5px rgba(0,0,0,0.2); /* Subtle shadow on the left edge */
 }
+
+body.dark-mode .sidebar {
+    background-color: #1a1a1a; /* Dark background for sidebar in dark mode */
+    box-shadow: -2px 0px 5px rgba(255,255,255,0.1);
+}
+
+
+.sidebar a {
+    padding: 15px 25px;
+    text-decoration: none;
+    font-size: 1.2em;
+    color: #333;
+    display: block;
+    transition: 0.3s;
+}
+
+body.dark-mode .sidebar a {
+    color: #f5f5f5;
+}
+
+
+.sidebar a:hover {
+    color: #a6192e;
+}
+
+body.dark-mode .sidebar a:hover {
+    color: #f0a500;
+}
+
+
+.sidebar .close-btn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 34px;
+    margin-left: 50px;
+    color: #333;
+}
+body.dark-mode .sidebar .close-btn {
+    color: #f5f5f5;
+}
+
+
+.sidebar-dark-mode-toggle, .install-button-sidebar {
+    padding-left: 25px;
+    padding-right: 25px;
+    margin-top: 20px;
+    margin-bottom: 15px;
+}
+.sidebar-dark-mode-toggle {
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+}
+.install-button-sidebar {
+    width: auto;
+    display: block; /* Make it full width in sidebar */
+    margin-left: 25px;
+    margin-right: 25px;
+    text-align: center;
+}
+
+
+/* Adjustments for dark mode toggle in sidebar */
+.sidebar .dark-mode-toggle {
+    justify-content: flex-start; /* Align to start in sidebar */
+    margin-left: 25px; /* Add left margin to align with sidebar links */
+    margin-right: 0; /* Reset right margin */
+}
+.sidebar-dark-mode-toggle .dark-mode-label {
+    margin-left: 0; /* Reset label's left margin if any */
+}
+.sidebar-dark-mode-toggle li {
+    margin-left: 0; /* Ensure no list margins interfere */
+}
+.sidebar-dark-mode-toggle-li {
+    margin-left: 0;
+}
+
+
 
 /* Logo */
 .logo-container {
@@ -301,13 +306,14 @@ body.dark-mode #installButton:active, body.dark-mode .install-button-nav:active 
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
     text-align: center;
     transition: background 0.3s, box-shadow 0.3s;
+    margin-top: 20px;
 }
 
 body.dark-mode .countdown {
     background: rgba(20, 20, 20, 0.9);
     box-shadow: 0 6px 18px rgba(255, 255, 255, 0.1);
 }
-/* Headings inside countdown container */
+
 /* Headings */
 h1 {
     font-family: 'Montserrat', sans-serif;
@@ -403,9 +409,20 @@ body.dark-mode footer a {
 }
 
 /* Responsive Design */
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
     body {
-        padding: 0px 15px;
+        padding: 0px; /* Reset body padding on smaller screens */
+    }
+    .container {
+        padding: 15px; /* Adjust container padding for smaller screens */
+    }
+
+    /* Hide nav links, show nav icon */
+    .nav-links {
+        display: none;
+    }
+    .nav-icon {
+        display: block; /* Show hamburger icon on smaller screens */
     }
 
     .countdown {
@@ -424,24 +441,15 @@ body.dark-mode footer a {
     .logo {
         max-width: 100px;
     }
-    nav ul {
-        flex-direction: column;
-        align-items: flex-start; /* Align links to the start on smaller screens */
-        display: none; /* Hide standard nav links on smaller screens */
-    }
-
-    .hamburger-menu {
-        display: block; /* Show hamburger menu on smaller screens */
-    }
-     .install-button-nav {
-        display: none; /* Hide install button in nav for larger screens */
-    }
 }
 
 /* iPhone 12 and smaller screens */
-@media (max-width: 430px) {
+@media screen and (max-width: 430px) {
     body {
-        padding: 0px 10px;
+        padding: 0px; /* Reset body padding on even smaller screens if needed */
+    }
+    .container {
+        padding: 10px; /* Further reduce container padding for very small screens */
     }
 
     .countdown {
@@ -509,7 +517,7 @@ body.dark-mode .event:hover h2 {
 
 
 /* Live Sessions Section */
-.live-sessions-container {
+.live-sessions {
     max-width: 900px;
     margin: 40px auto;
     padding: 30px;
@@ -518,14 +526,15 @@ body.dark-mode .event:hover h2 {
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
     text-align: center;
     transition: background 0.3s, box-shadow 0.3s;
+    margin-top: 20px;
 }
 
-body.dark-mode .live-sessions-container {
+body.dark-mode .live-sessions {
     background: rgba(20, 20, 20, 0.9);
     box-shadow: 0 6px 18px rgba(255, 255, 255, 0.1);
 }
 
-.live-sessions-container h1 {
+.live-sessions h1 {
     font-family: 'Montserrat', sans-serif;
     font-size: 2em;
     color: #a6192e;
@@ -534,7 +543,7 @@ body.dark-mode .live-sessions-container {
     text-transform: uppercase;
 }
 
-body.dark-mode .live-sessions-container h1 {
+body.dark-mode .live-sessions h1 {
     color: #f0a500;
 }
 
