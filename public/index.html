@@ -60,15 +60,17 @@
 <body>
     <nav class="nav-bar">
         <div class="nav-logo">
-            <!--<img src="/images/bbadbe.jpg" alt="BBA DBE Logo" class="logo">-->
             <a href="/" class="logo-text">Deadline Dash</a>
         </div>
         <div class="nav-links" id="navLinks">
             <ul>
                 <li><a href="#countdown" class="nav-link">CLA/Mid Term</a></li>
                 <li><a href="#live-sessions" class="nav-link">Live Sessions</a></li>
+            </ul>
+            <div class="nav-controls">
                 <li class="dark-mode-toggle-li">
                     <div class="dark-mode-toggle">
+                        <span class="toggle-label">Dark Mode</span>
                         <input type="checkbox" id="darkModeSwitch" class="dark-mode-checkbox">
                         <label for="darkModeSwitch" class="dark-mode-label">
                             <span class="dark-mode-slider"></span>
@@ -78,7 +80,7 @@
                  <li class="install-btn-li">
                      <button id="installButton" class="install-button">Install App</button>
                  </li>
-            </ul>
+             </div>
         </div>
         <div class="nav-icon">
             <i class="fa fa-bars" onclick="toggleSidebar()"></i>
@@ -88,6 +90,7 @@
             <a href="#countdown" class="sidebar-link" onclick="toggleSidebar()">CLA/Mid Term</a>
             <a href="#live-sessions" class="sidebar-link" onclick="toggleSidebar()">Live Sessions</a>
             <div class="dark-mode-toggle sidebar-dark-mode-toggle">
+                <span class="toggle-label">Dark Mode</span>
                 <input type="checkbox" id="darkModeSwitchSidebar" class="dark-mode-checkbox">
                 <label for="darkModeSwitchSidebar" class="dark-mode-label">
                     <span class="dark-mode-slider"></span>
