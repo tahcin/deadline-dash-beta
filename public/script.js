@@ -1,15 +1,30 @@
 document.addEventListener("DOMContentLoaded", function() {
-    const toggleButton = document.getElementById("darkModeToggle");
-    const body = document.body;
-        // Check and apply the saved dark mode preference
+    const darkModeSwitch = document.getElementById("darkModeSwitch");
+    const darkModeSwitchSidebar = document.getElementById("darkModeSwitchSidebar");
+
+
+    // Check and apply the saved dark mode preference
     if (localStorage.getItem("darkMode") === "enabled") {
         document.body.classList.add("dark-mode");
+        darkModeSwitch.checked = true;
+        darkModeSwitchSidebar.checked = true;
     }
 
-    // Toggle dark mode function
-    toggleButton.addEventListener("click", function() {
-        body.classList.toggle("dark-mode");
-        if (body.classList.contains("dark-mode")) {
+    // Toggle dark mode function for switch
+    darkModeSwitch.addEventListener("change", function() {
+        document.body.classList.toggle("dark-mode");
+        darkModeSwitchSidebar.checked = this.checked; // Sync sidebar switch
+        if (this.checked) {
+            localStorage.setItem("darkMode", "enabled");
+        } else {
+            localStorage.setItem("darkMode", "disabled");
+        }
+    });
+    // Toggle dark mode function for sidebar switch (sync main switch)
+    darkModeSwitchSidebar.addEventListener("change", function() {
+        document.body.classList.toggle("dark-mode");
+        darkModeSwitch.checked = this.checked; // Sync main switch
+        if (this.checked) {
             localStorage.setItem("darkMode", "enabled");
         } else {
             localStorage.setItem("darkMode", "disabled");
@@ -59,7 +74,7 @@ document.addEventListener("DOMContentLoaded", function () {
         countdown2: "https://apps.iimbx.edu.in/learning/course/course-v1:IIMBx+ES21x+BBA_DBE_B1/block-v1:IIMBx+ES21x+BBA_DBE_B1+type@sequential+block@6af5281590564e63870f26b57b78f841/block-v1:IIMBx+ES21x+BBA_DBE_B1+type@vertical+block@vertical7",
         countdown3: "https://apps.iimbx.edu.in/learning/course/course-v1:IIMBx+PJ21x+BBA_DBE_B1/block-v1:IIMBx+PJ21x+BBA_DBE_B1+type@sequential+block@3f3d99591cb14a9e9a133b3583251766/block-v1:IIMBx+PJ21x+BBA_DBE_B1+type@vertical+block@27405e39773d443288c557c7f97d7822",
         countdown4: ""
-     };
+    };
 
     document.querySelectorAll(".event").forEach(eventBox => {
         eventBox.style.cursor = "pointer"; // Make it clear it's clickable
@@ -85,99 +100,45 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-//PWA
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("/service-worker.js").then(() => {
-      console.log("Service Worker Registered");
-    });
-  });
-}
-
-let deferredInstallPrompt;
+//PWA install button - simple instruction as direct prompt is complex for now
 const installButton = document.getElementById('installButton');
-const installButtonNav = document.getElementById('installButtonNav');
 const installButtonSidebar = document.getElementById('installButtonSidebar');
 
-
-window.addEventListener('beforeinstallprompt', (e) => {
-  console.log('beforeinstallprompt fired');
-  e.preventDefault();
-  deferredInstallPrompt = e;
-  installButton.classList.remove('hidden');
-  installButtonNav.style.display = 'inline-block';
-  installButtonSidebar.style.display = 'block';
+installButton.addEventListener('click', () => {
+    alert('To install the app, look for the "Install" option in your browser menu (usually three dots or lines).');
 });
-
-installButton.addEventListener('click', async () => {
-  if (deferredInstallPrompt) {
-    deferredInstallPrompt.prompt();
-    const { outcome } = await deferredInstallPrompt.userChoice;
-    console.log(`User response to the install prompt: ${outcome}`);
-    deferredInstallPrompt = null;
-    installButton.classList.add('hidden');
-    installButtonNav.style.display = 'none';
-    installButtonSidebar.style.display = 'none';
-  }
-});
-
-installButtonNav.addEventListener('click', async () => {
-  if (deferredInstallPrompt) {
-    deferredInstallPrompt.prompt();
-    const { outcome } = await deferredInstallPrompt.userChoice;
-    console.log(`User response to the install prompt: ${outcome}`);
-    deferredInstallPrompt = null;
-    installButton.classList.add('hidden');
-    installButtonNav.style.display = 'none';
-    installButtonSidebar.style.display = 'none';
-  }
-});
-
-installButtonSidebar.addEventListener('click', async () => {
-  if (deferredInstallPrompt) {
-    deferredInstallPrompt.prompt();
-    const { outcome } = await deferredInstallPrompt.userChoice;
-    console.log(`User response to the install prompt: ${outcome}`);
-    deferredInstallPrompt = null;
-    installButton.classList.add('hidden');
-    installButtonNav.style.display = 'none';
-    installButtonSidebar.style.display = 'none';
-  }
+installButtonSidebar.addEventListener('click', () => {
+    alert('To install the app, look for the "Install" option in your browser menu (usually three dots or lines).');
 });
 
 
-window.addEventListener('appinstalled', () => { console.log('appinstalled fired', deferredInstallPrompt); deferredInstallPrompt = null; });
+// Sidebar Functionality
+function toggleSidebar() {
+    document.getElementById("sidebar").style.width = document.getElementById("sidebar").style.width === "250px" ? "0" : "250px";
+}
 
-// Sidebar functionality
-document.addEventListener('DOMContentLoaded', function() {
-    const hamburger = document.querySelector('.hamburger-menu');
-    const sidebar = document.querySelector('.sidebar');
+//Smooth scrolling for nav links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
 
-    hamburger.addEventListener('click', () => sidebar.classList.toggle('open'));
-});
+        let target = document.querySelector(this.getAttribute('href'));
+        if (!target) return; // Exit if target not found
 
-// Dark mode toggle for sidebar
-document.addEventListener('DOMContentLoaded', function() {
-    const toggleButtonSidebar = document.getElementById("darkModeToggleSidebar");
-    const body = document.body;
-    const toggleButton = document.getElementById("darkModeToggle");
+        target.scrollIntoView({
+            behavior: 'smooth'
+        });
 
-
-    toggleButtonSidebar.addEventListener("click", function() {
-        body.classList.toggle("dark-mode");
-        toggleButton.checked = toggleButtonSidebar.checked; // Sync main toggle
-
-        if (body.classList.contains("dark-mode")) {
-            localStorage.setItem("darkMode", "enabled");
-        } else {
-            localStorage.setItem("darkMode", "disabled");
+        if (document.getElementById("sidebar").style.width === "250px") { //If sidebar is open, close it after navigation on mobile
+            toggleSidebar();
         }
     });
+});
 
-    // Sync sidebar toggle with main toggle on page load
-    if (localStorage.getItem("darkMode") === "enabled") {
-        document.body.classList.add("dark-mode");
-        toggleButtonSidebar.checked = true;
-        toggleButton.checked = true; // Ensure main toggle is also checked on load
+
+// Initialize sidebar state if needed (e.g., close on page load for mobile)
+document.addEventListener('DOMContentLoaded', function() {
+    if (window.innerWidth <= 768) { // Example breakpoint, adjust as needed
+        document.getElementById("sidebar").style.width = "0";
     }
 });
