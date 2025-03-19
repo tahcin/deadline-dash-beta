@@ -49,6 +49,7 @@ body.dark-mode .nav-bar {
 .nav-logo {
     display: flex;
     align-items: center;
+    white-space: nowrap; /* Prevent logo text from wrapping */
 }
 
 
@@ -58,6 +59,7 @@ body.dark-mode .nav-bar {
     font-weight: 700;
     text-decoration: none;
     font-size: 1.4em;
+    white-space: nowrap; /* Ensure logo text stays in one line */
 }
 
 body.dark-mode .nav-logo .logo-text {
@@ -176,13 +178,10 @@ body.dark-mode .dark-mode-label {
     transition: transform 0.3s ease;
 }
 
-.dark-mode-checkbox:checked + .dark-mode-label .dark-mode-slider {
-    transform: translateX(30px); /* Move to the right by slider width */
-}
-
 .dark-mode-icon {
     position: absolute;
-    top: 7px;
+    top: 50%; /* Vertical center */
+    transform: translateY(-50%); /* Fine-tune vertical centering */
     font-size: 16px;
     color: #fff; /* Icon color white */
 }
