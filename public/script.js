@@ -1,3 +1,4 @@
+--- START OF FILE script (5).js ---
 document.addEventListener("DOMContentLoaded", function() {
     const darkModeSwitch = document.getElementById("darkModeSwitch");
     const darkModeSwitchSidebar = document.getElementById("darkModeSwitchSidebar");
