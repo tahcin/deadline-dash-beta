@@ -68,42 +68,43 @@ body.dark-mode .nav-logo .logo-text {
 .nav-links {
     display: flex;
     align-items: center;
-    justify-content: space-between; /* Distribute space between nav links and controls */
+    justify-content: flex-start; /* Changed to flex-start to align items to the start */
     width: 100%; /* Take full width to allow space-between to work */
 }
 
-.nav-links ul {
+.nav-items {
     list-style: none;
     padding: 0;
     margin: 0;
     display: flex;
     align-items: center;
+    margin-right: auto; /* Push navigation items to the left and controls to the right */
 }
 
-.nav-links li {
+.nav-items li {
     margin-left: 25px;
 }
 
-.nav-links li:first-child {
+.nav-items li:first-child {
     margin-left: 0;
 }
 
-.nav-links li a {
+.nav-items li a {
     text-decoration: none;
     color: #333;
     font-weight: 500;
     transition: color 0.3s ease;
 }
 
-body.dark-mode .nav-links li a {
+body.dark-mode .nav-items li a {
     color: #f5f5f5;
 }
 
-.nav-links li a:hover {
+.nav-items li a:hover {
     color: #a6192e;
 }
 
-body.dark-mode .nav-links li a:hover {
+body.dark-mode .nav-items li a:hover {
     color: #f0a500;
 }
 
@@ -111,13 +112,13 @@ body.dark-mode .nav-links li a:hover {
 .nav-controls {
     display: flex;
     align-items: center; /* Vertically align items in nav-controls */
-    margin-left: auto; /* Push controls to the right */
+    /* margin-left: auto;  Removing margin-left: auto from here */
 }
 
-.nav-controls li {
+.nav-controls > div { /* Directly target list items or divs within nav-controls */
     margin-left: 25px; /* Spacing between controls */
 }
-.nav-controls li:first-child {
+.nav-controls > div:first-child {
     margin-left: 25px; /* Spacing from nav links */
 }
 
@@ -133,6 +134,7 @@ body.dark-mode .nav-links li a:hover {
     font-weight: 500;
     color: #333;
     transition: color 0.3s ease;
+    user-select: none; /* prevent text selection while toggling */
 }
 body.dark-mode .dark-mode-toggle .toggle-label {
     color: #f5f5f5;
