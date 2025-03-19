@@ -206,7 +206,7 @@ body.dark-mode .dark-mode-label {
 
 .dark-mode-checkbox:checked + .dark-mode-label .dark-mode-icon.moon {
     opacity: 1; /* Show moon icon in dark mode */
-    
+
 }
 
 .dark-mode-checkbox:checked + .dark-mode-label .dark-mode-icon.sun {
@@ -311,23 +311,22 @@ body.dark-mode .sidebar .close-btn {
 }
 
 
-.sidebar-dark-mode-toggle, .install-button-sidebar {
-    padding-left: 25px;
-    padding-right: 25px;
+.sidebar-dark-mode-toggle {
+    display: flex; /* Enable flexbox for alignment */
+    align-items: center; /* Vertically align items */
+    justify-content: flex-start; /* Align items to the start of the container */
+    padding: 10px 25px; /* Add padding to match sidebar links */
     margin-top: 20px;
     margin-bottom: 15px;
 }
-.sidebar-dark-mode-toggle {
-    padding-top: 10px;
-    padding-bottom: 10px;
 
-}
-.install-button-sidebar {
-    width: auto;
-    display: block; /* Make it full width in sidebar */
-    margin-left: 25px;
-    margin-right: 25px;
-    text-align: center;
+.sidebar-dark-mode-toggle .toggle-label {
+    margin-right: 10px; /* Add space between label and toggle */
+    font-weight: 500;
+    color: #333; /* Text color in light mode */
+    transition: color 0.3s ease;
+    user-select: none;
+    display: inline; /* Make sure label is visible */
 }
 
 
@@ -349,6 +348,46 @@ body.dark-mode .sidebar .close-btn {
 }
 
 
+.sidebar-dark-mode-toggle .dark-mode-label {
+    background-color: #777; /* Gray background when off */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    width: 60px; /* increased width */
+    height: 30px; /* increased height */
+    border-radius: 30px; /* adjust border-radius to match height */
+    position: relative; /* Make label position relative for slider positioning */
+    padding: 5px;
+    transition: background-color 0.3s ease;
+    margin-left: 0; /* Reset margin that might have been set elsewhere */
+}
+
+body.dark-mode .sidebar-dark-mode-toggle .dark-mode-label {
+    background-color: #222; /* Dark background when dark mode on */
+}
+
+body.dark-mode .sidebar-dark-mode-toggle .toggle-label {
+    color: #f5f5f5; /* Text color in dark mode */
+}
+
+
+/* Install Button in Sidebar */
+.install-button-sidebar {
+    background: linear-gradient(135deg, #ffbb00, #ff6600); /* Orange gradient for install button */
+    color: white;
+    border: none;
+    padding: 10px 20px; /* Increased padding */
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    width: calc(100% - 50px); /* Full width minus sidebar padding on both sides */
+    margin-left: 25px;
+    margin-right: 25px;
+    text-align: center; /* Ensure text is centered */
+    display: block; /* Make it a block element to take full width */
+}
 
 /* Logo */
 .logo-container {
