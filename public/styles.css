@@ -316,7 +316,7 @@ body.dark-mode .sidebar .close-btn {
     align-items: center; /* Vertically align items */
     justify-content: flex-start; /* Align items to the start of the container */
     padding: 10px 25px; /* Add padding to match sidebar links */
-    margin-top: 20px;
+    margin-top: 60px;
     margin-bottom: 15px;
 }
 
