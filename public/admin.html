@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deadline Dash Admin - Notification Dashboard</title>
+    <meta name="robots" content="noindex, nofollow">
+    
+    <link rel="stylesheet" href="/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <style>
+        .admin-container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        body.dark-mode .admin-container {
+            background-color: #1e1e1e;
+            box-shadow: 0 4px 10px rgba(255, 255, 255, 0.05);
+        }
+        
+        .admin-title {
+            color: #a6192e;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 10px;
+        }
+        
+        body.dark-mode .admin-title {
+            color: #f0a500;
+            border-bottom-color: #444;
+        }
+        
+        .notification-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        .form-group label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .form-control {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: 'Lato', sans-serif;
+        }
+        
+        body.dark-mode .form-control {
+            background-color: #2d2d2d;
+            border-color: #444;
+            color: #f5f5f5;
+        }
+        
+        textarea.form-control {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .send-button {
+            padding: 12px 24px;
+            background-color: #a6192e;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            align-self: flex-start;
+            margin-top: 10px;
+        }
+        
+        .send-button:hover {
+            background-color: #8a1526;
+            transform: translateY(-2px);
+        }
+        
+        .send-button:active {
+            transform: translateY(0);
+        }
+        
+        body.dark-mode .send-button {
+            background-color: #f0a500;
+            color: #121212;
+        }
+        
+        body.dark-mode .send-button:hover {
+            background-color: #d89400;
+        }
+        
+        .notification-stats {
+            margin-top: 30px;
+            padding: 15px;
+            background-color: #f5f5f5;
+            border-radius: 8px;
+        }
+        
+        body.dark-mode .notification-stats {
+            background-color: #2d2d2d;
+        }
+        
+        .stats-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+            color: #a6192e;
+        }
+        
+        body.dark-mode .stats-title {
+            color: #f0a500;
+        }
+        
+        .alert {
+            padding: 10px 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            display: none;
+        }
+        
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .alert-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        body.dark-mode .alert-success {
+            background-color: #1e3a2d;
+            color: #8fd1a8;
+            border-color: #2c5741;
+        }
+        
+        body.dark-mode .alert-error {
+            background-color: #3a1e24;
+            color: #d18f97;
+            border-color: #57292c;
+        }
+        
+        #notificationHistory {
+            margin-top: 20px;
+        }
+        
+        .history-item {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        body.dark-mode .history-item {
+            border-bottom-color: #444;
+        }
+        
+        .login-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        
+        .login-form {
+            width: 100%;
+            max-width: 400px;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        body.dark-mode .login-form {
+            background-color: #1e1e1e;
+            box-shadow: 0 4px 20px rgba(255, 255, 255, 0.05);
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav-bar">
+        <div class="nav-logo">
+            <a href="/" class="logo-text">Deadline Dash Admin</a>
+        </div>
+        <div class="nav-links" id="navLinks">
+            <div class="nav-controls">
+                <div class="dark-mode-toggle-li">
+                    <div class="dark-mode-toggle">
+                        <span class="toggle-label">Dark Mode</span>
+                        <input type="checkbox" id="darkModeSwitch" class="dark-mode-checkbox">
+                        <label for="darkModeSwitch" class="dark-mode-label">
+                            <span class="dark-mode-icon moon"><i class="fas fa-moon"></i></span>
+                            <span class="dark-mode-icon sun"><i class="fas fa-sun"></i></span>
+                            <span class="dark-mode-slider"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="logout-li">
+                    <button id="logoutButton" class="install-button">Logout</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Login Screen (Initially Shown) -->
+    <div id="loginScreen" class="login-screen">
+        <div class="login-form">
+            <h2 class="admin-title">Admin Login</h2>
+            <form id="loginForm" class="notification-form">
+                <div class="form-group">
+                    <label for="adminEmail">Email</label>
+                    <input type="email" id="adminEmail" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="adminPassword">Password</label>
+                    <input type="password" id="adminPassword" class="form-control" required>
+                </div>
+                <button type="submit" class="send-button">Login</button>
+                <div id="loginAlert" class="alert alert-error"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard (Initially Hidden) -->
+    <div id="adminDashboard" style="display: none;">
+        <div class="container">
+            <div class="admin-container">
+                <h1 class="admin-title">Notification Dashboard</h1>
+                
+                <div id="notificationAlert" class="alert"></div>
+                
+                <form id="notificationForm" class="notification-form">
+                    <div class="form-group">
+                        <label for="notificationTitle">Notification Title</label>
+                        <input type="text" id="notificationTitle" class="form-control" placeholder="Enter notification title" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="notificationBody">Notification Message</label>
+                        <textarea id="notificationBody" class="form-control" placeholder="Enter notification message" required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="notificationURL">Link URL (Optional)</label>
+                        <input type="url" id="notificationURL" class="form-control" placeholder="https://example.com">
+                    </div>
+                    
+                    <button type="submit" class="send-button">Send Notification</button>
+                </form>
+                
+                <div class="notification-stats">
+                    <div class="stats-title">Notification Statistics</div>
+                    <p>Total Subscribers: <span id="subscriberCount">Loading...</span></p>
+                    <p>Last Notification Sent: <span id="lastNotification">None</span></p>
+                </div>
+                
+                <div class="notification-stats">
+                    <div class="stats-title">Recent Notifications</div>
+                    <div id="notificationHistory">
+                        <p>Loading notification history...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-functions-compat.js"></script>
+    
+    <script src="/firebase-config.js"></script>
+    <script src="/admin.js"></script>
+</body>
+</html> 
