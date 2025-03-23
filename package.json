@@ -1,8 +1,0 @@
-{
-  "name": "deadline-dash",
-  "version": "1.0.0",  
-  "type": "module",
-  "dependencies": {
-    "@redis/client": "^1.0.0"
-  }
-}
