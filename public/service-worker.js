@@ -38,3 +38,74 @@ self.addEventListener("fetch", (event) => {
       .catch(() => caches.match(event.request)) // Use cache if offline
   );
 });
+
+// Push notification event handler
+self.addEventListener('push', (event) => {
+  if (!event.data) {
+    console.log('Push event but no data');
+    return;
+  }
+
+  try {
+    const data = event.data.json();
+    
+    const options = {
+      body: data.body || 'New notification from Deadline Dash',
+      icon: data.icon || '/images/android-chrome-192x192.png',
+      badge: '/images/favicon-32x32.png',
+      data: {
+        url: data.url || '/',
+        timestamp: data.timestamp || Date.now()
+      },
+      actions: [
+        {
+          action: 'view',
+          title: 'View'
+        }
+      ],
+      vibrate: [100, 50, 100],
+      timestamp: data.timestamp || Date.now()
+    };
+
+    event.waitUntil(
+      self.registration.showNotification(data.title || 'Deadline Dash', options)
+    );
+  } catch (error) {
+    console.error('Error showing notification:', error);
+  }
+});
+
+// Notification click event handler
+self.addEventListener('notificationclick', (event) => {
+  const notification = event.notification;
+  notification.close();
+
+  let url = '/';
+  
+  if (notification.data && notification.data.url) {
+    url = notification.data.url;
+  }
+
+  // Check if the action button was clicked
+  if (event.action === 'view') {
+    // This is the same as clicking the notification body
+    // Handle any special logic here if needed
+  }
+
+  // This will open the specified URL or fall back to root
+  event.waitUntil(
+    clients.matchAll({ type: 'window' }).then((clientList) => {
+      // Check if there's already a window/tab open with the target URL
+      for (const client of clientList) {
+        if (client.url === url && 'focus' in client) {
+          return client.focus();
+        }
+      }
+      
+      // If no window/tab is open, open a new one
+      if (clients.openWindow) {
+        return clients.openWindow(url);
+      }
+    })
+  );
+});

@@ -790,3 +790,142 @@ body.dark-mode .join-button:hover {
 .install-info-container a:hover {
   text-decoration: underline;
 }
+
+/* Notification subscription button */
+.subscribe-btn {
+    padding: 8px 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.subscribe-btn:hover {
+    background-color: #0056b3;
+}
+
+.subscribe-btn:disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+}
+
+.subscribe-btn.unsubscribe {
+    background-color: #dc3545;
+}
+
+.subscribe-btn.unsubscribe:hover {
+    background-color: #c82333;
+}
+
+/* Admin panel styles */
+.admin-panel {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.dark-mode .admin-panel {
+    background-color: #333;
+    color: #f5f5f5;
+}
+
+.admin-login-form,
+.admin-notification-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.form-group label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group textarea {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: inherit;
+}
+
+.dark-mode .form-group input,
+.dark-mode .form-group textarea {
+    background-color: #444;
+    color: #f5f5f5;
+    border-color: #666;
+}
+
+.admin-btn {
+    padding: 10px 15px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    transition: background-color 0.3s ease;
+}
+
+.admin-btn:hover {
+    background-color: #218838;
+}
+
+.admin-btn:disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+}
+
+.admin-stats {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+}
+
+.dark-mode .admin-stats {
+    background-color: #444;
+}
+
+.admin-notification-history {
+    margin-top: 20px;
+}
+
+.notification-item {
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    border-left: 3px solid #007bff;
+}
+
+.dark-mode .notification-item {
+    background-color: #444;
+    border-left-color: #0d6efd;
+}
+
+@media (max-width: 768px) {
+    .subscribe-btn {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+    
+    .admin-panel {
+        margin: 20px;
+        padding: 15px;
+    }
+}

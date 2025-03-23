@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deadline Dash - Admin Panel</title>
+    <meta name="robots" content="noindex, nofollow">
+
+    <link rel="stylesheet" href="/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <script src="/admin.js" defer></script>
+</head>
+<body>
+    <nav class="nav-bar">
+        <div class="nav-logo">
+            <a href="/" class="logo-text">Deadline Dash</a>
+        </div>
+        <div class="nav-links" id="navLinks">
+            <ul class="nav-items">
+                <li><a href="/" class="nav-link">Back to Home</a></li>
+            </ul>
+            <div class="nav-controls">
+                <div class="dark-mode-toggle-li">
+                    <div class="dark-mode-toggle">
+                        <span class="toggle-label">Dark Mode</span>
+                        <input type="checkbox" id="darkModeSwitch" class="dark-mode-checkbox">
+                        <label for="darkModeSwitch" class="dark-mode-label">
+                            <span class="dark-mode-icon moon"><i class="fas fa-moon"></i></span>
+                            <span class="dark-mode-icon sun"><i class="fas fa-sun"></i></span>
+                            <span class="dark-mode-slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mobile-nav-toggle" onclick="toggleSidebar()">
+            <i class="fas fa-bars"></i>
+        </div>
+    </nav>
+    
+    <div class="mobile-sidebar" id="mobileSidebar">
+        <div class="sidebar-header">
+            <span class="sidebar-title">Deadline Dash</span>
+            <button class="sidebar-close" onclick="toggleSidebar()"><i class="fas fa-times"></i></button>
+        </div>
+        <ul class="sidebar-links">
+            <li><a href="/" class="sidebar-link">Back to Home</a></li>
+            <li class="dark-mode-toggle-li">
+                <div class="dark-mode-toggle">
+                    <span class="toggle-label">Dark Mode</span>
+                    <input type="checkbox" id="darkModeSwitchSidebar" class="dark-mode-checkbox">
+                    <label for="darkModeSwitchSidebar" class="dark-mode-label">
+                        <span class="dark-mode-icon moon"><i class="fas fa-moon"></i></span>
+                        <span class="dark-mode-icon sun"><i class="fas fa-sun"></i></span>
+                        <span class="dark-mode-slider"></span>
+                    </label>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <main class="main-content">
+        <div class="container">
+            <h1 class="section-title">Admin Panel</h1>
+            <p class="section-description">Manage push notifications for Deadline Dash</p>
+
+            <div class="admin-panel" id="loginPanel">
+                <h2>Admin Login</h2>
+                <form class="admin-login-form" id="loginForm">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    <button type="submit" class="admin-btn">Login</button>
+                </form>
+                <div id="loginError" class="error-message" style="display: none; color: red; margin-top: 10px;"></div>
+            </div>
+
+            <div class="admin-panel" id="notificationPanel" style="display: none;">
+                <h2>Send Push Notifications</h2>
+                <div class="admin-stats" id="subscriberStats">
+                    Loading subscriber stats...
+                </div>
+                
+                <form class="admin-notification-form" id="notificationForm">
+                    <div class="form-group">
+                        <label for="notificationTitle">Notification Title</label>
+                        <input type="text" id="notificationTitle" name="title" required placeholder="e.g., New Assignment Due">
+                    </div>
+                    <div class="form-group">
+                        <label for="notificationBody">Notification Body</label>
+                        <textarea id="notificationBody" name="body" rows="4" required placeholder="e.g., Your Economics assignment is due in 24 hours."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="notificationUrl">Redirect URL (optional)</label>
+                        <input type="text" id="notificationUrl" name="url" placeholder="e.g., /assignments">
+                    </div>
+                    <button type="submit" class="admin-btn" id="sendBtn">Send Notification</button>
+                </form>
+                <div id="notificationResult" style="display: none; margin-top: 10px;"></div>
+                
+                <div class="admin-notification-history" id="notificationHistory">
+                    <h3>Recent Notifications</h3>
+                    <div id="historyItems">
+                        No notifications sent yet.
+                    </div>
+                </div>
+                
+                <button class="admin-btn" id="logoutBtn" style="margin-top: 20px; background-color: #dc3545;">Logout</button>
+            </div>
+        </div>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-credits">
+                <p>&copy; 2023 Deadline Dash. Created by <a href="https://github.com/tahcinex" target="_blank">Tahcin Sarwar</a></p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html> 
