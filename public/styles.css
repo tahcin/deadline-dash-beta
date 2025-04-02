@@ -995,7 +995,7 @@ header {
 /* Marquee Section (Re-added) */
 .marquee-container {
     background: var(--primary-color);
-    padding: 0.75rem 0;
+    padding: 0.4rem 0;
     overflow: hidden;
     position: relative;
     box-shadow: var(--shadow-md);
@@ -1006,6 +1006,7 @@ header {
     display: inline-block;
     animation: marqueeScroll 20s linear infinite;
     padding-left: 100%;
+    font-size: 0.9rem;
 }
 
 .marquee-container a {
@@ -1013,6 +1014,14 @@ header {
     text-decoration: none;
     font-weight: 600;
     letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 1.4rem;
+}
+
+.marquee-container a i {
+    margin-left: 0.5rem;
 }
 
 .marquee-container a:hover {
