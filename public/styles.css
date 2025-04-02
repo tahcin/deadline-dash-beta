@@ -448,24 +448,52 @@ body.dark-mode .sidebar .close-btn {
 
 /* Sidebar dark mode toggle */
 .sidebar-dark-mode-toggle {
-    margin: 1rem 0;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-    padding: 0.25rem 0;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0.5rem 0;
+    margin: 0.5rem 0;
 }
 
 .sidebar-dark-mode-toggle .toggle-label {
-    display: inline-block;
-    margin-right: 0.75rem;
+    font-weight: 500;
     color: var(--text-primary);
-    flex-shrink: 0;
-    min-width: 80px;
+    margin-right: 0;
+    flex: 1;
 }
 
-/* Ensure consistent dark-mode toggle label coloring */
-body.dark-mode .sidebar-dark-mode-toggle .toggle-label {
-    color: var(--text-primary);
+/* Fix dark mode toggle in sidebar */
+.sidebar-footer .dark-mode-label {
+    width: 56px;
+    height: 28px;
+}
+
+.sidebar-footer .dark-mode-slider {
+    width: 24px;
+    height: 24px;
+    top: 2px;
+    left: 2px;
+}
+
+.sidebar-footer .dark-mode-checkbox:checked + .dark-mode-label .dark-mode-slider {
+    transform: translateX(28px);
+}
+
+/* Adjust spacing for controls in sidebar */
+.sidebar-footer {
+    padding-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Make sidebar buttons more consistent */
+.notification-button-sidebar, 
+.install-button-sidebar {
+    width: 100%;
+    margin: 0;
+    justify-content: center;
 }
 
 /* Notification button */
@@ -1138,4 +1166,19 @@ body.dark-mode .sidebar {
 .notification-button:hover i,
 .join-button:hover i {
     transform: scale(1.2);
+}
+
+/* Additional styles for dark mode sidebar toggle */
+body.dark-mode .sidebar .sidebar-footer .sidebar-dark-mode-toggle .toggle-label {
+    color: #e9f1ff;
+}
+
+/* Ensure icon alignment in sidebar dark mode toggle */
+.sidebar .sidebar-footer .dark-mode-icon.moon {
+    left: 6px;
+}
+
+.sidebar .sidebar-footer .dark-mode-icon.sun {
+    right: 6px;
+    font-size: 14px;
 }
