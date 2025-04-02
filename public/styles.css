@@ -101,7 +101,7 @@ body.dark-mode .nav-bar {
 }
 
 body.dark-mode .nav-logo .logo-text {
-    color: #f0a500;
+    color: var(--primary-color);
 }
 
 .nav-links {
@@ -595,7 +595,10 @@ body.dark-mode h2 {
     color: var(--accent-color);
     letter-spacing: 1px;
     margin-top: 0.5rem;
+    min-height: 2.5rem; /* Ensure height exists before content loads */
+    display: inline-block;
     animation: pulseColor 2s infinite;
+    animation-delay: 0.5s; /* Delay animation start to ensure content is loaded */
 }
 
 @keyframes pulseColor {
@@ -612,7 +615,7 @@ body.dark-mode #timer5,
 body.dark-mode #timer6,
 body.dark-mode #timer7,
 body.dark-mode #timer8 {
-    color: #f0a500;
+    color: var(--accent-color); /* Match light mode */
 }
 
 /* Event Cards */
