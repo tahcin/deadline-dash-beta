@@ -632,16 +632,9 @@ body.dark-mode h2 {
     margin-top: 0.5rem;
     min-height: 2.5rem; /* Ensure height exists before content loads */
     display: inline-block;
-    animation: pulseColor 2s infinite;
-    animation-delay: 0.5s; /* Delay animation start to ensure content is loaded */
 }
 
-@keyframes pulseColor {
-    0% { color: var(--accent-color); }
-    50% { color: var(--primary-color); }
-    100% { color: var(--accent-color); }
-}
-
+/* Ensure timer color is consistently pink in dark mode */
 body.dark-mode #timer1,
 body.dark-mode #timer2,
 body.dark-mode #timer3,
@@ -650,7 +643,7 @@ body.dark-mode #timer5,
 body.dark-mode #timer6,
 body.dark-mode #timer7,
 body.dark-mode #timer8 {
-    color: var(--accent-color); /* Match light mode */
+    color: var(--accent-color); /* Keep the accent color (pink) */
 }
 
 /* Event Cards */
