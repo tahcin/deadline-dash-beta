@@ -67,7 +67,7 @@ body.dark-mode {
 
 /* Navigation Bar Styles */
 .nav-bar {
-    background: rgba(255, 255, 255, 0.7);
+    background: rgba(255, 255, 255, 0.5);
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
     box-shadow: var(--shadow-md);
