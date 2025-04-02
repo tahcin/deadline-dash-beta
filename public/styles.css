@@ -1044,7 +1044,7 @@ header {
 .marquee-content {
     white-space: nowrap;
     display: inline-block;
-    animation: marqueeScroll 15s linear infinite;
+    animation: marqueeScroll 12s linear infinite;
     padding-left: 100%;
     font-size: 0.9rem;
 }
