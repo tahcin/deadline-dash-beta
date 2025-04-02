@@ -168,7 +168,7 @@ body.dark-mode .nav-items li a {
 }
 
 body.dark-mode .nav-items li a:hover {
-    color: #f0a500;
+    color: var(--accent-color);
 }
 
 .nav-items li a::after {
@@ -222,7 +222,7 @@ body.dark-mode .dark-mode-toggle .toggle-label {
 }
 
 .dark-mode-label {
-    background-color: #99a8c2;
+    background-color: rgba(153, 168, 194, 0.5);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -237,7 +237,7 @@ body.dark-mode .dark-mode-toggle .toggle-label {
 }
 
 body.dark-mode .dark-mode-label {
-    background-color: #222; /* Dark background when dark mode on */
+    background-color: rgba(34, 34, 34, 0.5);
 }
 
 .dark-mode-slider {
@@ -360,7 +360,7 @@ body.dark-mode .nav-icon {
     box-shadow: var(--shadow-lg);
     z-index: 9999;
     overflow-y: auto;
-    padding: 2rem 1.5rem;
+    padding: 2.5rem 1.5rem 1.5rem;
     transition: right 0.3s ease;
     display: flex;
     flex-direction: column;
@@ -397,23 +397,29 @@ body.dark-mode .sidebar {
 }
 
 .sidebar-links {
-    margin: 2rem 0;
+    margin: 1.5rem 0;
     display: flex;
     flex-direction: column;
+    gap: 0.5rem;
 }
 
 .sidebar-footer {
     margin-top: auto;
+    padding-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
 }
 
 .sidebar a {
     display: block;
-    padding: 0.75rem 0;
+    padding: 0.75rem 0.5rem;
     text-decoration: none;
     color: var(--text-primary);
     font-weight: 500;
     transition: var(--transition);
     text-align: left;
+    border-radius: var(--radius-sm);
 }
 
 body.dark-mode .sidebar a {
@@ -421,11 +427,12 @@ body.dark-mode .sidebar a {
 }
 
 .sidebar a:hover {
-    color: var(--primary-color);
+    color: var(--accent-color);
+    background-color: rgba(0, 0, 0, 0.05);
 }
 
 body.dark-mode .sidebar a:hover {
-    color: #f0a500;
+    background-color: rgba(255, 255, 255, 0.05);
 }
 
 .sidebar .close-btn {
@@ -444,11 +451,20 @@ body.dark-mode .sidebar .close-btn {
     margin: 1rem 0;
     display: flex;
     align-items: center;
+    justify-content: flex-start;
+    padding: 0.25rem 0;
 }
 
 .sidebar-dark-mode-toggle .toggle-label {
     display: inline-block;
-    margin-right: 1rem;
+    margin-right: 0.75rem;
+    color: var(--text-primary);
+    flex-shrink: 0;
+    min-width: 80px;
+}
+
+/* Ensure consistent dark-mode toggle label coloring */
+body.dark-mode .sidebar-dark-mode-toggle .toggle-label {
     color: var(--text-primary);
 }
 
@@ -862,7 +878,7 @@ body.dark-mode footer {
 }
 
 body.dark-mode footer a {
-    color: #f0a500;
+    color: var(--accent-color);
 }
 
 /* Header additions */
