@@ -67,7 +67,7 @@ body.dark-mode {
 
 /* Navigation Bar Styles */
 .nav-bar {
-    background: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
     box-shadow: var(--shadow-md);
@@ -349,13 +349,13 @@ body.dark-mode .nav-icon {
     color: #f5f5f5;
 }
 
-/* Sidebar Styles */
+/* Sidebar Styles - Fix duplicate definitions and broken layout */
 .sidebar {
     position: fixed;
     top: 0;
     right: -280px;
     width: 280px;
-    height: 100%;
+    height: 100vh;
     background: var(--bg-card);
     box-shadow: var(--shadow-lg);
     z-index: 9999;
@@ -366,18 +366,51 @@ body.dark-mode .nav-icon {
     flex-direction: column;
 }
 
-body.dark-mode .sidebar {
-    background: rgba(19, 27, 47, 0.95);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    box-shadow: -2px 0px 5px rgba(255,255,255,0.1);
-}
-
-/* Sidebar is OPEN state (add this class via JavaScript) */
 .sidebar.open {
     right: 0;
 }
 
+body.dark-mode .sidebar {
+    background: rgba(19, 27, 47, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: -2px 0px 5px rgba(0,0,0,0.3);
+}
+
+/* Fix sidebar footer spacing */
+.sidebar-footer {
+    margin-top: auto;
+    padding-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Ensure dark mode toggle is properly aligned */
+.sidebar-dark-mode-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0.5rem 0;
+    margin: 0.5rem 0;
+    border-radius: var(--radius-sm);
+}
+
+.sidebar-dark-mode-toggle .toggle-label {
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+/* Fix sidebar button styles */
+.notification-button-sidebar,
+.install-button-sidebar {
+    width: 100%;
+    margin: 0;
+    justify-content: center;
+}
+
+/* Fix sidebar overlay */
 .sidebar-overlay {
     position: fixed;
     top: 0;
@@ -388,7 +421,7 @@ body.dark-mode .sidebar {
     z-index: 999;
     opacity: 0;
     visibility: hidden;
-    transition: all 0.3s ease;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
 .sidebar-overlay.active {
@@ -401,14 +434,6 @@ body.dark-mode .sidebar {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-}
-
-.sidebar-footer {
-    margin-top: auto;
-    padding-top: 1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
 }
 
 .sidebar a {
@@ -444,56 +469,6 @@ body.dark-mode .sidebar a:hover {
 }
 body.dark-mode .sidebar .close-btn {
     color: #f5f5f5;
-}
-
-/* Sidebar dark mode toggle */
-.sidebar-dark-mode-toggle {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    padding: 0.5rem 0;
-    margin: 0.5rem 0;
-}
-
-.sidebar-dark-mode-toggle .toggle-label {
-    font-weight: 500;
-    color: var(--text-primary);
-    margin-right: 0;
-    flex: 1;
-}
-
-/* Fix dark mode toggle in sidebar */
-.sidebar-footer .dark-mode-label {
-    width: 56px;
-    height: 28px;
-}
-
-.sidebar-footer .dark-mode-slider {
-    width: 24px;
-    height: 24px;
-    top: 2px;
-    left: 2px;
-}
-
-.sidebar-footer .dark-mode-checkbox:checked + .dark-mode-label .dark-mode-slider {
-    transform: translateX(28px);
-}
-
-/* Adjust spacing for controls in sidebar */
-.sidebar-footer {
-    padding-top: 1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-/* Make sidebar buttons more consistent */
-.notification-button-sidebar, 
-.install-button-sidebar {
-    width: 100%;
-    margin: 0;
-    justify-content: center;
 }
 
 /* Notification button */
@@ -554,19 +529,6 @@ body.dark-mode .sidebar .close-btn {
 
 .notification-button.blocked:hover {
     background: #dc2626;
-}
-
-.notification-button-sidebar {
-    width: 100%;
-    margin: 1rem 0;
-    justify-content: center;
-}
-
-.install-button-sidebar {
-    width: 100%;
-    margin: 1rem 0;
-    justify-content: center;
-    text-align: center;
 }
 
 .install-info-container {
@@ -982,6 +944,34 @@ header {
         backdrop-filter: blur(5px);
         -webkit-backdrop-filter: blur(5px);
     }
+
+    .sidebar {
+        width: 280px;
+        right: -280px;
+    }
+    
+    .sidebar.open {
+        right: 0;
+    }
+    
+    /* Improve sidebar dark mode contrast */
+    body.dark-mode .sidebar-dark-mode-toggle {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 0.5rem;
+        border-radius: var(--radius-sm);
+    }
+    
+    /* Make sidebar icons more visible */
+    .sidebar a i {
+        width: 24px;
+        text-align: center;
+        margin-right: 8px;
+        color: var(--primary-color);
+    }
+    
+    body.dark-mode .sidebar a i {
+        color: var(--primary-color);
+    }
 }
 
 /* iPhone 12 and smaller screens */
@@ -1181,4 +1171,31 @@ body.dark-mode .sidebar .sidebar-footer .sidebar-dark-mode-toggle .toggle-label 
 .sidebar .sidebar-footer .dark-mode-icon.sun {
     right: 6px;
     font-size: 14px;
+}
+
+/* Fix dark mode toggle in sidebar */
+.sidebar-footer .dark-mode-label {
+    width: 56px;
+    height: 28px;
+}
+
+.sidebar-footer .dark-mode-slider {
+    width: 24px;
+    height: 24px;
+    top: 2px;
+    left: 2px;
+}
+
+.sidebar-footer .dark-mode-checkbox:checked + .dark-mode-label .dark-mode-slider {
+    transform: translateX(28px);
+}
+
+/* Fix sidebar install button alignment */
+.install-button-sidebar {
+    text-align: center;
+}
+
+/* Additional styles for dark mode sidebar toggle */
+body.dark-mode .sidebar .sidebar-footer .sidebar-dark-mode-toggle .toggle-label {
+    color: #e9f1ff;
 }
