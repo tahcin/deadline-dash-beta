@@ -742,7 +742,15 @@ body.dark-mode .event {
     color: var(--primary-color);
 }
 
+body.dark-mode .session p i {
+    color: var(--accent-color);
+}
+
 .session:hover p i {
+    color: var(--primary-color);
+}
+
+body.dark-mode .session:hover p i {
     color: var(--accent-color);
 }
 
@@ -1019,7 +1027,7 @@ header {
     }
     
     body.dark-mode .sidebar a i {
-        color: var(--primary-color);
+        color: var(--accent-color);
     }
 
     /* Increase logo size for better visibility */
@@ -1182,10 +1190,19 @@ body {
     opacity: 0.8;
 }
 
+body.dark-mode .section-icon {
+    color: var(--accent-color);
+}
+
 .event:hover .section-icon,
 .session:hover .section-icon {
     transform: translateY(-5px);
     opacity: 1;
+    color: var(--primary-color);
+}
+
+body.dark-mode .event:hover .section-icon,
+body.dark-mode .session:hover .section-icon {
     color: var(--accent-color);
 }
 
@@ -1213,7 +1230,7 @@ body.dark-mode .sidebar {
 .install-button:hover i,
 .notification-button:hover i,
 .join-button:hover i {
-    transform: scale(1.2);
+    transform: none;
 }
 
 /* Additional styles for dark mode sidebar toggle */
