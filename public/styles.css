@@ -6,17 +6,18 @@
 }
 
 :root {
-    --primary-color: #3a86ff;
-    --primary-dark: #0072ff;
-    --accent-color: #ff006e;
-    --accent-hover: #e5006e;
-    --success-color: #06d6a0;
-    --warning-color: #ffbe0b;
-    --text-primary: #2b3a55;
-    --text-secondary: #586a8e;
-    --bg-light: #f0f4f8;
+    /* Restored original colors */
+    --primary-color: #a6192e;
+    --primary-dark: #8a1526;
+    --accent-color: #f0a500;
+    --accent-hover: #d99000;
+    --success-color: #10b981;
+    --warning-color: #f59e0b;
+    --text-primary: #333333;
+    --text-secondary: #666666;
+    --bg-light: #f8f8f8;
     --bg-card: #ffffff;
-    --bg-accent: rgba(58, 134, 255, 0.05);
+    --bg-accent: rgba(166, 25, 46, 0.05);
     --shadow-sm: 0 2px 4px rgba(0,0,0,0.06);
     --shadow-md: 0 4px 10px rgba(0,0,0,0.08);
     --shadow-lg: 0 10px 20px rgba(0,0,0,0.1);
@@ -24,7 +25,7 @@
     --radius-md: 10px;
     --radius-lg: 16px;
     --transition: all 0.3s ease;
-    --accent-color-rgb: 255, 0, 110;
+    --accent-color-rgb: 240, 165, 0;
 }
 
 body {
@@ -39,23 +40,23 @@ body {
 
 /* Dark Mode */
 body.dark-mode {
-    --primary-color: #4dabff;
-    --primary-dark: #70bcff;
-    --accent-color: #fb5394;
-    --accent-hover: #ff70aa;
+    --primary-color: #a6192e;
+    --primary-dark: #bf1d36; 
+    --accent-color: #f0a500;
+    --accent-hover: #ffb824;
     --success-color: #0ce6ad;
     --warning-color: #ffd447;
-    --text-primary: #e9f1ff;
-    --text-secondary: #a9c1f5;
-    --bg-light: #131b2f;
-    --bg-card: #1d2942;
-    --bg-accent: rgba(58, 134, 255, 0.08);
+    --text-primary: #f0f0f0;
+    --text-secondary: #bbbbbb;
+    --bg-light: #121212;
+    --bg-card: #1f1f1f;
+    --bg-accent: rgba(166, 25, 46, 0.1);
     --shadow-sm: 0 2px 4px rgba(0,0,0,0.2);
     --shadow-md: 0 4px 10px rgba(0,0,0,0.25);
     --shadow-lg: 0 10px 20px rgba(0,0,0,0.3);
-    background: #0c1425;
+    background: #1a1a1a;
     color: var(--text-primary);
-    --accent-color-rgb: 251, 83, 148;
+    --accent-color-rgb: 240, 165, 0;
 }
 
 /* Container for content to not be full width and respect padding */
@@ -83,7 +84,7 @@ body.dark-mode {
 }
 
 body.dark-mode .nav-bar {
-    background: rgba(13, 20, 37, 0.7);
+    background: rgba(26, 26, 26, 0.7);
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
@@ -109,7 +110,7 @@ body.dark-mode .nav-bar {
 }
 
 body.dark-mode .nav-logo .logo-text {
-    color: var(--primary-color);
+    color: var(--accent-color);
 }
 
 .nav-logo .logo-text::before {
@@ -178,12 +179,16 @@ body.dark-mode .nav-items li a:hover {
     height: 3px;
     bottom: 0;
     left: 0;
-    background-color: var(--accent-color);
+    background-color: var(--primary-color);
     transition: width 0.3s ease;
 }
 
 .nav-items li a:hover::after {
     width: 100%;
+}
+
+body.dark-mode .nav-items li a::after {
+    background-color: var(--accent-color);
 }
 
 /* Navigation Controls (Dark Mode Toggle, Install Button) */
@@ -273,7 +278,7 @@ body.dark-mode .dark-mode-label {
 }
 
 .dark-mode-checkbox:checked + .dark-mode-label {
-    background: var(--primary-color);
+    background: var(--accent-color);
 }
 
 .dark-mode-checkbox:checked + .dark-mode-label .dark-mode-slider {
@@ -457,12 +462,12 @@ body.dark-mode .sidebar a {
 }
 
 .sidebar a:hover {
-    color: var(--accent-color);
+    color: var(--primary-color);
     background-color: rgba(0, 0, 0, 0.05);
 }
 
 body.dark-mode .sidebar a:hover {
-    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--accent-color);
 }
 
 .sidebar .close-btn {
@@ -600,7 +605,7 @@ h1::after {
     bottom: -12px;
     width: 60px;
     height: 4px;
-    background: var(--accent-color);
+    background: var(--primary-color);
     transform: translateX(-50%);
     border-radius: 2px;
     animation: expandWidth 0.5s ease-out forwards;
@@ -627,7 +632,7 @@ body.dark-mode h2 {
 #timer1, #timer2, #timer3, #timer4, #timer5, #timer6, #timer7, #timer8 {
     font-size: 1.75rem;
     font-weight: 700;
-    color: var(--accent-color);
+    color: var(--primary-color);
     letter-spacing: 1px;
     margin-top: 0.5rem;
     min-height: 2.5rem; /* Ensure height exists before content loads */
@@ -643,7 +648,7 @@ body.dark-mode #timer5,
 body.dark-mode #timer6,
 body.dark-mode #timer7,
 body.dark-mode #timer8 {
-    color: var(--accent-color); /* Keep the accent color (pink) */
+    color: var(--accent-color);
 }
 
 /* Event Cards */
@@ -660,7 +665,7 @@ body.dark-mode #timer8 {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    border-left: 5px solid var(--accent-color);
+    border-left: 5px solid var(--primary-color);
 }
 
 .event::before {
@@ -678,7 +683,7 @@ body.dark-mode #timer8 {
 .event:hover {
     box-shadow: var(--shadow-lg);
     transform: translateY(-8px);
-    border-left: 8px solid var(--accent-color);
+    border-left: 8px solid var(--primary-color);
 }
 
 .event:hover::before {
@@ -693,6 +698,7 @@ body.dark-mode #timer8 {
 body.dark-mode .event {
     background: var(--bg-card);
     box-shadow: var(--shadow-md);
+    border-left: 5px solid var(--accent-color);
 }
 
 /* Live session cards */
@@ -1196,4 +1202,30 @@ body.dark-mode .sidebar .sidebar-footer .sidebar-dark-mode-toggle .toggle-label 
 /* Additional styles for dark mode sidebar toggle */
 body.dark-mode .sidebar .sidebar-footer .sidebar-dark-mode-toggle .toggle-label {
     color: #e9f1ff;
+}
+
+/* Additional dark mode color fixes */
+body.dark-mode h1 {
+    color: var(--accent-color);
+}
+
+body.dark-mode h1::after {
+    background: var(--accent-color);
+}
+
+/* Fix session border colors */
+.session {
+    border-left: 5px solid var(--primary-color);
+}
+
+.session:hover {
+    border-left: 8px solid var(--primary-color);
+}
+
+body.dark-mode .session {
+    border-left: 5px solid var(--accent-color);
+}
+
+body.dark-mode .session:hover {
+    border-left: 8px solid var(--accent-color);
 }
