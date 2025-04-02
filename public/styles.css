@@ -1095,11 +1095,17 @@ header {
 
 /* Marquee Section (Re-added) */
 .marquee-container {
-    background: var(--primary-color);
-    padding: 0.4rem 0;
+    background: var(--bg-card);
+    box-shadow: var(--shadow-sm);
+    padding: 0.25rem 0;
     overflow: hidden;
     position: relative;
-    box-shadow: var(--shadow-md);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+body.dark-mode .marquee-container {
+    background: var(--bg-card);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .marquee-content {
@@ -1107,26 +1113,31 @@ header {
     display: inline-block;
     animation: marqueeScroll 12s linear infinite;
     padding-left: 100%;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
 }
 
 .marquee-container a {
-    color: white;
+    color: var(--primary-color);
     text-decoration: none;
     font-weight: 600;
     letter-spacing: 0.5px;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 1.4rem;
+    height: 1.2rem;
+}
+
+body.dark-mode .marquee-container a {
+    color: var(--accent-color);
 }
 
 .marquee-container a i {
     margin-left: 0.5rem;
+    color: var(--primary-color);
 }
 
-.marquee-container a:hover {
-    text-decoration: underline;
+body.dark-mode .marquee-container a i {
+    color: var(--accent-color);
 }
 
 @keyframes marqueeScroll {
