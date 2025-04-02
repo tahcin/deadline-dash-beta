@@ -371,10 +371,15 @@ body.dark-mode .nav-icon {
 }
 
 body.dark-mode .sidebar {
-    background: rgba(19, 27, 47, 0.95);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background: var(--bg-card);
     box-shadow: -2px 0px 5px rgba(0,0,0,0.3);
+}
+
+/* Style for sidebar */
+body.dark-mode .sidebar {
+    background: var(--bg-card);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
 }
 
 /* Fix sidebar footer spacing */
@@ -948,10 +953,11 @@ header {
     .sidebar {
         width: 280px;
         right: -280px;
+        background: var(--bg-card);
     }
     
-    .sidebar.open {
-        right: 0;
+    body.dark-mode .sidebar {
+        background: var(--bg-card);
     }
     
     /* Improve sidebar dark mode contrast */
@@ -1146,9 +1152,8 @@ h1 .section-icon {
 
 /* Style for sidebar */
 body.dark-mode .sidebar {
-    background: rgba(19, 27, 47, 0.95);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background: var(--bg-card);
+    box-shadow: -2px 0px 5px rgba(0,0,0,0.3);
 }
 
 /* Add icon animation to buttons */
